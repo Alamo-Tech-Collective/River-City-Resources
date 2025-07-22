@@ -1,0 +1,60 @@
+# Build artifacts
+build/
+.gradle/
+out/
+target/
+*.jar
+*.war
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose*.yml
+
+# Documentation
+README.md
+CLAUDE.md
+docs/
+
+# Test files
+src/test/
+src/integration-test/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Node modules (if any frontend assets)
+node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# GitHub
+.github/

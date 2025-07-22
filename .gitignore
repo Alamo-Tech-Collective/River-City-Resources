@@ -1,0 +1,26 @@
+Thumbs.db
+.DS_Store
+.gradle
+build/
+target/
+out/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+.factorypath
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker volumes
+mysql_data/
+
+# Logs
+logs/
+*.log

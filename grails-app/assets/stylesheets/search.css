@@ -1,0 +1,102 @@
+/* Search Page Styles */
+
+/* Search Form Container */
+.search-form {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+/* Search Input Styling */
+#searchQuery {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+#searchQuery:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Filter Section Styling */
+.filter-section {
+    margin-bottom: 1rem;
+}
+
+.filter-section .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.filter-section .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+}
+
+.filter-section .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Eligibility Checkboxes Enhancement */
+.eligibility-checkboxes {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    max-height: none;
+}
+
+.eligibility-checkboxes .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.eligibility-checkboxes .form-check:last-child {
+    margin-bottom: 0;
+}
+
+.eligibility-checkboxes .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Resource Card Styling */
+.resource-card {
+    border: 1px solid rgba(0,0,0,.125);
+    margin-bottom: 20px;
+}
+
+.resource-card .card-title a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.resource-card .card-title a:hover {
+    text-decoration: underline;
+}
+
+/* No Results Styling */
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* Form Help Text */
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .search-form {
+        padding: 1rem;
+    }
+}

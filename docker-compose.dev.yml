@@ -1,0 +1,23 @@
+services:
+  mysql:
+    ports:
+      - "3306:3306"  # Expose MySQL for local development
+    
+  grails-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - riverCityResources:latest
+    volumes:
+      - ./grails-app:/app/grails-app  # Mount source for hot reload
+      - ./src:/app/src
+      - gradle-cache:/home/grails/.gradle
+    environment:
+      GRAILS_ENV: development
+      SPRING_PROFILES_ACTIVE: development
+      JAVA_OPTS: -Xmx1g -Xms512m -Dspring.devtools.restart.enabled=true
+
+volumes:
+  gradle-cache:
+    driver: local

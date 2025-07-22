@@ -1,0 +1,187 @@
+/* Admin Form Enhancements */
+
+/* Form Layout Improvements */
+.scaffold-create .form,
+.scaffold-edit .form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* Contact Section Card */
+.contact-section {
+    margin-bottom: 1.5rem;
+    border: 1px solid #dee2e6;
+}
+
+.contact-section .card-header {
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.contact-section .card-header h5 {
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+/* Eligibility Requirements */
+.eligibility-container {
+    margin-bottom: 1rem;
+}
+
+.eligibility-item {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.eligibility-item:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.eligibility-item .card-body {
+    padding: 1rem;
+}
+
+.remove-eligibility {
+    white-space: nowrap;
+}
+
+#add-eligibility {
+    margin-top: 0.5rem;
+}
+
+/* Services and Hours Text Areas */
+.services-container textarea,
+.hours-container textarea {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Form Validation Styles */
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Save Indicator */
+.save-indicator {
+    font-size: 0.875rem;
+    font-weight: normal;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Buttons */
+.buttons {
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn {
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+}
+
+/* Help Text */
+.form-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .eligibility-item .row > div {
+        margin-bottom: 0.5rem;
+    }
+    
+    .eligibility-item .remove-eligibility {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    .contact-section .row > div {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Accessibility Enhancements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus Styles */
+.form-control:focus,
+.btn:focus {
+    outline: 3px solid rgba(0, 123, 255, 0.25);
+    outline-offset: 2px;
+}
+
+/* Loading State */
+.form-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

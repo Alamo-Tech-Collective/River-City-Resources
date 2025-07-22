@@ -1,0 +1,93 @@
+River City Resources - E2E Test Results (Updated)
+Test Date: Sat Jul 19 15:07:32 CDT 2025
+========================================
+
+Homepage loads: PASS
+
+Homepage contains site title: FAIL
+  Details: Page does not contain expected text: River City Resources
+
+Homepage mentions San Antonio: FAIL
+  Details: Page does not contain expected text: San Antonio
+
+Homepage mentions disability resources: FAIL
+  Details: Page does not contain expected text: disability resources
+
+Search page loads: PASS
+
+Search page has search functionality: FAIL
+  Details: Page does not contain expected text: Search
+
+Search page has keywords field: FAIL
+  Details: Page does not contain expected text: Keywords
+
+Home link exists: FAIL
+  Details: Page does not contain expected text: href="/"
+
+Search link exists: FAIL
+  Details: Page does not contain expected text: href="/directory/search"
+
+Admin login link exists: FAIL
+  Details: Page does not contain expected text: href="/login"
+
+Category links exist: FAIL
+  Details: Page does not contain expected text: /directory/category/
+
+Resource page requires authentication: PASS
+
+Category management requires authentication: PASS
+
+Admin page requires authentication: PASS
+
+Resource create requires authentication: PASS
+
+Login page accessible: PASS
+
+Login page has username field: PASS
+
+Login page has password field: PASS
+
+Search form exists: FAIL
+  Details: Page does not contain expected text: <form
+
+Search query field exists: FAIL
+  Details: Page does not contain expected text: name="searchQuery"
+
+Search form has ARIA role: FAIL
+  Details: Page does not contain expected text: role="search"
+
+Navigation has ARIA role: FAIL
+  Details: Page does not contain expected text: role="navigation"
+
+Main content has ARIA role: FAIL
+  Details: Page does not contain expected text: role="main"
+
+Skip navigation link exists: FAIL
+  Details: Page does not contain expected text: Skip to main content
+
+ARIA descriptions present: FAIL
+  Details: Page does not contain expected text: aria-describedby
+
+Images have alt text: FAIL
+  Details: Page does not contain expected text: alt=
+
+Non-existent page redirects to login: PASS
+
+Non-existent resource redirects to login: PASS
+
+Bootstrap CSS loads: PASS
+
+Accessibility CSS loads: PASS
+
+Favicon loads: PASS
+
+Search with query parameter: PASS
+
+Search with category filter: PASS
+
+========================================
+Test Summary:
+Total Tests: 33
+Passed: 16
+Failed: 17
+Success Rate: 48%

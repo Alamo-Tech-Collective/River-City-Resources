@@ -1,0 +1,87 @@
+/* Navigation Bar Alignment Fix */
+
+/* Override conflicting .nav styles from main.css for Bootstrap navbar */
+.navbar .nav {
+    display: flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+    padding-left: 0 !important;
+    zoom: normal !important;
+}
+
+.navbar .nav li {
+    display: list-item !important;
+    float: none !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    list-style-type: none !important;
+}
+
+.navbar .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.navbar .navbar-nav .nav-item {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar .navbar-nav .nav-link {
+    display: block !important;
+    padding: 0.5rem 1rem !important;
+    color: #c0d3db !important;
+    text-decoration: none !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    background-color: #2559a7 !important;
+    color: white !important;
+}
+
+/* Fix the dropdown alignment */
+.navbar .navbar-nav .dropdown {
+    position: relative;
+}
+
+.navbar .navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Ensure navbar brand is properly aligned */
+.navbar .navbar-brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+/* Fix for mobile responsive navigation */
+@media (max-width: 991px) {
+    .navbar .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+    }
+    
+    .navbar .navbar-nav .nav-item {
+        width: 100% !important;
+    }
+    
+    .navbar .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    .navbar .navbar-nav .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+    }
+}

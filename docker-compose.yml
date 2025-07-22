@@ -1,0 +1,59 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: river-city-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-rivercityresources}
+      MYSQL_USER: ${MYSQL_USER:-grails}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-grailspassword}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - river-city-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      timeout: 20s
+      retries: 10
+      start_period: 30s
+      interval: 10s
+
+  grails-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: river-city-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: production
+      GRAILS_ENV: production
+      DATABASE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-rivercityresources}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DATABASE_USERNAME: ${MYSQL_USER:-grails}
+      DATABASE_PASSWORD: ${MYSQL_PASSWORD:-grailspassword}
+      JAVA_OPTS: ${JAVA_OPTS:--Xmx512m -Xms256m}
+      SERVER_PORT: 8080
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    networks:
+      - river-city-network
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+networks:
+  river-city-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

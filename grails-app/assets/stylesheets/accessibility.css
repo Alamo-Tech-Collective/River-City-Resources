@@ -1,0 +1,549 @@
+/* Accessibility Styles for River City Resources */
+/* WCAG 2.1 AA Compliance */
+
+/* Skip Navigation Link */
+.skip-nav {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 4px;
+    font-weight: bold;
+    transition: top 0.3s ease;
+}
+
+.skip-nav:focus {
+    top: 0;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Focus Indicators */
+*:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* High contrast focus for buttons */
+.btn:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Form focus indicators */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Link focus indicators */
+a:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Dropdown focus indicators */
+.dropdown-item:focus {
+    background-color: #007bff;
+    color: white;
+    outline: 3px solid #0056b3;
+    outline-offset: 2px;
+}
+
+/* Navbar toggle focus */
+.navbar-toggler:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Color Contrast Improvements */
+/* Ensure all text meets WCAG 2.1 AA contrast ratio of 4.5:1 */
+
+/* Dark text on light backgrounds */
+body {
+    color: #212529; /* High contrast dark text */
+}
+
+/* Secondary text with improved contrast */
+.text-muted {
+    color: #495057 !important; /* Improved from Bootstrap's default */
+}
+
+/* Link color improvements */
+a {
+    color: #0056b3; /* Darker blue for better contrast */
+}
+
+a:hover {
+    color: #003d82; /* Even darker on hover */
+}
+
+/* Button contrast improvements */
+.btn-primary {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-primary:hover {
+    background-color: #003d82;
+    border-color: #003d82;
+}
+
+.btn-secondary {
+    background-color: #495057;
+    border-color: #495057;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+/* Form Labels */
+label {
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+
+/* Required field indicators */
+.required::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Error Messages */
+.errors {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #721c24;
+}
+
+.errors li {
+    margin-bottom: 0.5rem;
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Form field error state */
+.form-control.error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Success Messages */
+.message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #155724;
+}
+
+/* Loading Spinner Accessibility */
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Screen Reader Only Text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Keyboard Navigation for Cards */
+.card:focus-within {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Table Accessibility */
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #212529;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Breadcrumb Accessibility */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: #6c757d;
+    padding: 0 0.5rem;
+}
+
+.breadcrumb-item.active {
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Footer Accessibility */
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    margin-top: 2rem;
+    padding: 2rem 0;
+}
+
+.footer h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 1rem;
+}
+
+.footer p {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    color: #495057;
+    text-decoration: none;
+}
+
+.footer ul li a:hover,
+.footer ul li a:focus {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+    
+    .btn-primary {
+        background-color: #000;
+        border-color: #000;
+        color: #fff;
+    }
+    
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #333;
+        border-color: #333;
+    }
+    
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+    
+    .form-control {
+        border: 2px solid #000;
+    }
+    
+    .form-control:focus {
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .skip-nav {
+        transition: none;
+    }
+}
+
+/* Mobile Accessibility Improvements */
+@media (max-width: 768px) {
+    .skip-nav {
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+    
+    .form-control {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .btn {
+        min-height: 44px; /* Touch target size */
+        min-width: 44px;
+    }
+    
+    a {
+        min-height: 44px;
+        display: inline-block;
+        line-height: 44px;
+    }
+}
+
+/* Focus Management */
+.focus-trap {
+    outline: none;
+}
+
+/* Live Region for Dynamic Content */
+.live-region {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Dropdown Menu Accessibility */
+.dropdown-menu {
+    border: 2px solid #dee2e6;
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 0.75rem 1.25rem;
+    color: #212529;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Form Group Spacing */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Card Accessibility */
+.card {
+    border: 1px solid #dee2e6;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: #495057;
+    line-height: 1.6;
+}
+
+/* Alert Accessibility */
+.alert {
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+/* Accessibility Controls */
+.btn-accessibility {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.btn-accessibility .btn {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-accessibility .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-accessibility .btn:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+.high-contrast * {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+.high-contrast .navbar {
+    background-color: #000 !important;
+    border-bottom: 2px solid #fff !important;
+}
+
+.high-contrast .navbar-brand,
+.high-contrast .nav-link {
+    color: #fff !important;
+}
+
+.high-contrast .navbar-brand:hover,
+.high-contrast .nav-link:hover {
+    color: #ffff00 !important;
+}
+
+.high-contrast .btn-primary {
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}
+
+.high-contrast .btn-primary:hover {
+    background-color: #ffff00 !important;
+    color: #000 !important;
+    border-color: #ffff00 !important;
+}
+
+.high-contrast .btn-secondary {
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}
+
+.high-contrast .btn-secondary:hover {
+    background-color: #ffff00 !important;
+    color: #000 !important;
+    border-color: #ffff00 !important;
+}
+
+.high-contrast .card {
+    background-color: #000 !important;
+    border: 2px solid #fff !important;
+}
+
+.high-contrast .form-control {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+}
+
+.high-contrast .form-control:focus {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #ffff00 !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.25) !important;
+}
+
+.high-contrast .dropdown-menu {
+    background-color: #000 !important;
+    border: 2px solid #fff !important;
+}
+
+.high-contrast .dropdown-item {
+    color: #fff !important;
+}
+
+.high-contrast .dropdown-item:hover,
+.high-contrast .dropdown-item:focus {
+    background-color: #ffff00 !important;
+    color: #000 !important;
+}
+
+.high-contrast .footer {
+    background-color: #000 !important;
+    border-top: 2px solid #fff !important;
+}
+
+.high-contrast .hero-section {
+    background-color: #000 !important;
+}
+
+.high-contrast .text-muted {
+    color: #fff !important;
+}
+
+.high-contrast a {
+    color: #ffff00 !important;
+}
+
+.high-contrast a:hover {
+    color: #fff !important;
+}
+
+.high-contrast .btn-accessibility .btn {
+    background-color: #ffff00 !important;
+    color: #000 !important;
+    border-color: #ffff00 !important;
+}
+
+.high-contrast .btn-accessibility .btn:hover {
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}

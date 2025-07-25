@@ -674,3 +674,35 @@ img.grails-logo {
     height:340px;
     margin-top:-10px;
 }
+
+/* Navbar Logo Styles */
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.navbar-brand {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand:hover .navbar-logo {
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .navbar-logo {
+        height: 32px;
+    }
+}
+
+/* Focus states for accessibility */
+.navbar-brand:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    border-radius: 4px;
+}

@@ -23,8 +23,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation" aria-label="Main navigation">
     <div class="container-fluid">
-        <g:link controller="directory" action="index" class="navbar-brand">
-            <g:message code="app.name"/>
+        <g:link controller="directory" action="index" class="navbar-brand d-flex align-items-center">
+            <asset:image src="logo.png" alt="River City Resources Logo" class="navbar-logo me-3"/>
+            <span><g:message code="app.name"/></span>
         </g:link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation menu">
             <span class="navbar-toggler-icon"></span>

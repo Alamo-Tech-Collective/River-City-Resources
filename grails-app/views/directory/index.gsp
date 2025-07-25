@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>River City Resources - San Antonio Disability Resources</title>
+    <title><g:message code="app.name"/> - <g:message code="app.tagline"/></title>
     <style>
         .category-card {
             margin-bottom: 20px;
@@ -37,17 +37,17 @@
 <body>
     <div class="hero-section">
         <div class="container">
-            <h1 class="text-center mb-4">River City Resources</h1>
-            <p class="text-center lead mb-4">Connecting San Antonio residents with disability resources and services</p>
+            <h1 class="text-center mb-4"><g:message code="app.name"/></h1>
+            <p class="text-center lead mb-4"><g:message code="app.description"/></p>
             
             <div class="search-box">
-                <g:form controller="directory" action="search" method="GET" class="form" role="search" aria-label="Quick search for resources">
+                <g:form controller="directory" action="search" method="GET" class="form" role="search" aria-label="${message(code: 'search.title')}">
                     <div class="input-group input-group-lg">
-                        <input type="text" name="q" class="form-control" placeholder="Search for resources..." 
-                               aria-label="Search for resources" value="${params.q}">
+                        <input type="text" name="q" class="form-control" placeholder="${message(code: 'search.placeholder')}" 
+                               aria-label="${message(code: 'search.title')}" value="${params.q}">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit" aria-label="Search resources">
-                                <i class="fas fa-search" aria-hidden="true"></i> Search
+                            <button class="btn btn-primary" type="submit" aria-label="${message(code: 'button.search')}">
+                                <i class="fas fa-search" aria-hidden="true"></i> <g:message code="button.search"/>
                             </button>
                         </div>
                     </div>
@@ -57,8 +57,8 @@
     </div>
 
     <div class="container">
-        <section aria-label="Resource Categories">
-            <h2 class="mb-4">Browse by Category</h2>
+        <section aria-label="${message(code: 'category.all')}">
+            <h2 class="mb-4"><g:message code="nav.search"/> <g:message code="label.category"/></h2>
             <div class="row">
                 <g:each in="${categories}" var="category">
                     <div class="col-md-4">

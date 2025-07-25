@@ -46,7 +46,7 @@ body {
 }
 
 a:hover, a:active {
-    outline: none; /* prevents outline in webkit on active links but retains it for tab focus */
+    /* Removed outline: none to maintain accessibility */
 }
 
 h1, h2, h3 {
@@ -159,10 +159,17 @@ img {
     color: #666666;
 }
 
-.nav a:focus, .nav a:hover {
+.nav a:focus {
     background-color: #999999;
     color: #ffffff;
-    outline: none;
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.nav a:hover {
+    background-color: #999999;
+    color: #ffffff;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
@@ -188,6 +195,68 @@ img {
 
 .nav a.create {
     background-image: url(../images/skin/database_add.png);
+}
+
+/* Admin dropdown fixes */
+.navbar-dark .dropdown-menu {
+    background-color: #424649;
+    border: 1px solid #565e64;
+    border-radius: 0.25rem;
+    margin-top: 0.125rem;
+    min-width: 200px;
+    max-width: 300px;
+    right: 0;
+    left: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-dark .dropdown-menu .dropdown-item {
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    display: block;
+    border: none;
+    background: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.875rem;
+}
+
+.navbar-dark .dropdown-menu .dropdown-item:hover,
+.navbar-dark .dropdown-menu .dropdown-item:focus {
+    background-color: #565e64;
+    color: #ffffff;
+}
+
+.navbar-dark .dropdown-menu .dropdown-divider {
+    border-top: 1px solid #565e64;
+    margin: 0.5rem 0;
+}
+
+/* Ensure dropdown doesn't go off-screen */
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-dark .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+    
+    .navbar-dark .dropdown-menu .dropdown-item {
+        color: rgba(255,255,255,0.75);
+        padding: 0.5rem 1.5rem;
+    }
 }
 
 .nav li.dropdown.show ul.dropdown-menu {
@@ -489,11 +558,18 @@ th:hover, tr:hover {
     border-radius: 0.3em;
 }
 
-.pagination a:hover, .pagination a:focus,
+.pagination a:hover,
 .pagination .currentStep {
     background-color: #999999;
     color: #ffffff;
-    outline: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.pagination a:focus {
+    background-color: #999999;
+    color: #ffffff;
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
@@ -534,11 +610,22 @@ th:hover, tr:hover {
     border-radius: 0.3em;
 }
 
-.buttons input:hover, .buttons input:focus,
-.buttons a:hover, .buttons a:focus {
+.buttons input:hover,
+.buttons a:hover {
     background-color: #999999;
     color: #ffffff;
-    outline: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.buttons input:focus,
+.buttons a:focus {
+    background-color: #999999;
+    color: #ffffff;
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
     -moz-box-shadow: none;
     -webkit-box-shadow: none;

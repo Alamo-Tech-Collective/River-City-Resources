@@ -7,6 +7,14 @@ grails:
   codegen:
     defaultPackage: riverCityResources
   profile: web
+  i18n:
+    defaultLocale: en_US
+    locales:
+      - en_US
+      - es
+  web:
+    locale:
+      resolver: session
   views:
     default:
       codec: html

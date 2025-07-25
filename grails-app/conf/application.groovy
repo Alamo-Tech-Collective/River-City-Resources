@@ -19,6 +19,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     // Public access to directory pages
     [pattern: '/directory/**',   access: ['permitAll']],
     
+    // Language switching (must be public)
+    [pattern: '/language/**',    access: ['permitAll']],
+    
     // Admin only access
     [pattern: '/resource/**',    access: ['ROLE_ADMIN']],
     [pattern: '/category/**',    access: ['ROLE_ADMIN']],

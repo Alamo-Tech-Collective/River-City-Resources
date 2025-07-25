@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="${session?.lang ?: 'en'}" class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g:layoutTitle default="${message(code: 'app.name')}"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
@@ -19,12 +19,12 @@
 
 <body>
 
-<a href="#main-content" class="skip-nav">Skip to main content</a>
+<a href="#main-content" class="skip-nav"><g:message code="accessibility.skipToContent"/></a>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation" aria-label="Main navigation">
     <div class="container-fluid">
         <g:link controller="directory" action="index" class="navbar-brand">
-            River City Resources
+            <g:message code="app.name"/>
         </g:link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation menu">
             <span class="navbar-toggler-icon"></span>
@@ -33,28 +33,66 @@
         <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                    <g:link controller="directory" action="index" class="nav-link" aria-current="${controllerName == 'directory' && actionName == 'index' ? 'page' : ''}">Home</g:link>
+                    <g:link controller="directory" action="index" class="nav-link" aria-current="${controllerName == 'directory' && actionName == 'index' ? 'page' : ''}">
+                        <g:message code="nav.home"/>
+                    </g:link>
                 </li>
                 <li class="nav-item">
-                    <g:link controller="directory" action="search" class="nav-link" aria-current="${controllerName == 'directory' && actionName == 'search' ? 'page' : ''}">Search</g:link>
+                    <g:link controller="directory" action="search" class="nav-link" aria-current="${controllerName == 'directory' && actionName == 'search' ? 'page' : ''}">
+                        <g:message code="nav.search"/>
+                    </g:link>
                 </li>
+                <!-- Language Switcher -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="${message(code: 'accessibility.languageSwitcher')}">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                        <g:message code="nav.language"/>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown" role="menu">
+                        <g:link controller="language" action="switchLanguage" 
+                                params="[lang: 'en']" class="dropdown-item" role="menuitem">
+                            <g:message code="language.english"/>
+                            <g:if test="${!session?.lang || session?.lang == 'en'}">
+                                <i class="fas fa-check ml-2" aria-hidden="true"></i>
+                            </g:if>
+                        </g:link>
+                        <g:link controller="language" action="switchLanguage" 
+                                params="[lang: 'es']" class="dropdown-item" role="menuitem">
+                            <g:message code="language.spanish"/>
+                            <g:if test="${session?.lang == 'es'}">
+                                <i class="fas fa-check ml-2" aria-hidden="true"></i>
+                            </g:if>
+                        </g:link>
+                    </div>
+                </li>
+                
                 <sec:ifLoggedIn>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Admin menu">
-                            Admin
+                            <g:message code="nav.admin"/>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="adminDropdown" role="menu">
-                            <g:link controller="admin" action="index" class="dropdown-item" role="menuitem">Dashboard</g:link>
-                            <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">Manage Resources</g:link>
-                            <g:link controller="category" action="index" class="dropdown-item" role="menuitem">Manage Categories</g:link>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown" role="menu">
+                            <g:link controller="admin" action="index" class="dropdown-item" role="menuitem">
+                                <g:message code="admin.dashboard"/>
+                            </g:link>
+                            <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">
+                                <g:message code="admin.manage.resources"/>
+                            </g:link>
+                            <g:link controller="category" action="index" class="dropdown-item" role="menuitem">
+                                <g:message code="admin.manage.categories"/>
+                            </g:link>
                             <div class="dropdown-divider" role="separator"></div>
-                            <g:link controller="logout" class="dropdown-item" role="menuitem">Logout</g:link>
+                            <g:link controller="logout" class="dropdown-item" role="menuitem">
+                                <g:message code="nav.logout"/>
+                            </g:link>
                         </div>
                     </li>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
                     <li class="nav-item">
-                        <g:link controller="login" action="auth" class="nav-link" aria-current="${controllerName == 'login' ? 'page' : ''}">Admin Login</g:link>
+                        <g:link controller="login" action="auth" class="nav-link" aria-current="${controllerName == 'login' ? 'page' : ''}">
+                            <g:message code="nav.admin.login"/>
+                        </g:link>
                     </li>
                 </sec:ifNotLoggedIn>
                 <g:pageProperty name="page.nav"/>
@@ -71,29 +109,29 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>River City Resources</h3>
-                <p>Connecting San Antonio residents with disability resources and services.</p>
+                <h3><g:message code="app.name"/></h3>
+                <p><g:message code="footer.tagline"/></p>
             </div>
             <div class="col-md-4">
-                <h3>Quick Links</h3>
+                <h3><g:message code="footer.quickLinks"/></h3>
                 <nav aria-label="Footer navigation">
                     <ul class="list-unstyled">
-                        <li><g:link controller="directory" action="index">Home</g:link></li>
-                        <li><g:link controller="directory" action="search">Search Resources</g:link></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><g:link controller="directory" action="index"><g:message code="nav.home"/></g:link></li>
+                        <li><g:link controller="directory" action="search"><g:message code="nav.search"/> <g:message code="nav.resources"/></g:link></li>
+                        <li><a href="#"><g:message code="nav.about"/></a></li>
+                        <li><a href="#"><g:message code="nav.contact"/></a></li>
                     </ul>
                 </nav>
             </div>
             <div class="col-md-4">
-                <h3>Accessibility</h3>
+                <h3><g:message code="footer.accessibility"/></h3>
                 <p>This website is designed to be accessible to all users. If you experience any difficulties, please <a href="#" aria-label="Contact us for accessibility support">contact us</a>.</p>
             </div>
         </div>
         <hr>
         <div class="text-center">
-            <p>&copy; <g:formatDate date="${new Date()}" format="yyyy"/> River City Resources. All rights reserved.</p>
-            <p class="mt-2">Made with ❤️ by <a href="https://alamotechcollective.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Alamo Tech Collective website">Alamo Tech Collective</a></p>
+            <p>&copy; <g:formatDate date="${new Date()}" format="yyyy"/> <g:message code="app.name"/>. <g:message code="footer.copyright"/></p>
+            <p class="mt-2"><g:message code="footer.madeWith"/> <a href="https://alamotechcollective.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Alamo Tech Collective website">Alamo Tech Collective</a></p>
         </div>
     </div>
 </footer>

@@ -1057,5 +1057,412 @@ class BootStrap {
         respiteCareResource.save(failOnError: true)
         
         log.info "Added 7 additional disability services to the database (January 2025)"
+        
+        // Additional comprehensive disability services (Added July 2025)
+        createNewResearchedServices(categories)
+    }
+    
+    private void createNewResearchedServices(Map<String, Category> categories) {
+        // The Center for Health Care Services (CHCS) - Support/Community
+        def chcsResource = new Resource(
+            name: 'The Center for Health Care Services (CHCS)',
+            description: 'CHCS provides quality integrated care to improve the lives of children and adults with mental health conditions, substance use challenges and intellectual or developmental disabilities. They offer a sliding fee scale and accept all patients regardless of inability to pay.',
+            servicesOffered: '''• Mental health services for children and adults
+• Intellectual and developmental disability services
+• Substance abuse treatment programs
+• Crisis intervention and 24-hour helpline
+• Case management and therapy services
+• Psychiatric medication management
+• Veterans mental health support
+• Community-based rehabilitation services''',
+            hoursOfOperation: '24-Hour Crisis & Substance Use Helpline: (210) 223-7233\nRoutine Appointments: Monday-Friday 8:30 AM - 5:00 PM',
+            featured: true,
+            category: categories['Support/Community']
+        )
+        
+        chcsResource.contact = new Contact(
+            phone: '(210) 223-7233',
+            email: 'info@chcsbc.org',
+            address: '6800 Park Ten Blvd, Suite 200-S',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78213',
+            website: 'https://chcsbc.org'
+        )
+        
+        chcsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Open to children and adults with mental health conditions, substance use issues, or intellectual/developmental disabilities',
+            type: 'disability'
+        ))
+        
+        chcsResource.save(failOnError: true)
+        
+        // Vibrant Works (formerly San Antonio Lighthouse for the Blind) - Support/Community  
+        def vibrantWorksResource = new Resource(
+            name: 'Vibrant Works (formerly San Antonio Lighthouse for the Blind)',
+            description: 'Vibrant Works empowers people with vision loss through comprehensive rehabilitation services, technology training, and employment opportunities. They are one of the largest employers of individuals with vision loss in the nation.',
+            servicesOffered: '''• Vision rehabilitation and orientation/mobility training
+• Technology evaluation and assistive technology training
+• Career guidance and employment placement services
+• Adaptive living skills training in home settings
+• Senior services program (serves 3,500+ seniors annually)
+• Computer modification for visual impairment
+• Low vision evaluations and magnification devices
+• Braille classes and educational support
+• Peer support groups and counseling''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nSenior programs and home visits by appointment',
+            featured: true,
+            category: categories['Support/Community']
+        )
+        
+        vibrantWorksResource.contact = new Contact(
+            phone: '(210) 614-3911',
+            email: 'info@vibrantworks.org',
+            address: '2203 Babcock Rd',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78229',
+            website: 'https://vibrantworks.org'
+        )
+        
+        vibrantWorksResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must be blind or vision impaired',
+            type: 'disability'
+        ))
+        
+        vibrantWorksResource.save(failOnError: true)
+        
+        // Easter Seals San Antonio Rehabilitation Center - Support/Community
+        def easterSealsResource = new Resource(
+            name: 'Easter Seals San Antonio Rehabilitation Center',
+            description: 'Easter Seals provides exceptional services, education, outreach, and advocacy for people living with autism and other disabilities. They serve over 1,200 individuals annually with comprehensive rehabilitation programs.',
+            servicesOffered: '''• Early Childhood Intervention (ECI) for children birth to 36 months
+• New Beginnings Program for adults with disabilities
+• Physical, occupational, and speech therapy
+• Family education and counseling services
+• Veterans services and support programs
+• Specialized skills training and transition planning
+• Autism spectrum disorder programs
+• Personal and social adjustment programs
+• Community support and resource coordination''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nECI services provided in natural environments',
+            category: categories['Support/Community']
+        )
+        
+        easterSealsResource.contact = new Contact(
+            phone: '(210) 614-3911',
+            email: 'info@easterseals.com',
+            address: '2203 Babcock Rd',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78229',
+            website: 'https://www.easterseals.com/sanantonio'
+        )
+        
+        easterSealsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Serves individuals with autism, developmental delays, and other disabilities',
+            type: 'disability'
+        ))
+        easterSealsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'ECI services for children birth to 36 months with developmental delays',
+            type: 'age'
+        ))
+        
+        easterSealsResource.save(failOnError: true)
+        
+        // Special Olympics Texas - San Antonio Area - Support/Community
+        def specialOlympicsResource = new Resource(
+            name: 'Special Olympics Texas - San Antonio Area',
+            description: 'Special Olympics provides year-round sports training and athletic competition in Olympic-type sports for children and adults with intellectual disabilities, promoting physical fitness, courage, and community participation.',
+            servicesOffered: '''• Year-round sports training and competition
+• Young Athletes Program for ages 2-7
+• FUNdamental Sports for foundational motor skills
+• Basketball, swimming, track and field programs
+• Boccia, bowling, and soccer programs
+• Unified Sports with partners without disabilities
+• Volunteer coaching and officiating opportunities
+• Community inclusion and awareness programs''',
+            hoursOfOperation: 'Program times vary by sport\nTraining sessions typically evenings and weekends',
+            category: categories['Support/Community']
+        )
+        
+        specialOlympicsResource.contact = new Contact(
+            phone: '(210) 495-5888',
+            email: 'info@sotx.org',
+            address: '4732 Whirlwind Dr',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78217',
+            website: 'https://www.sotx.org'
+        )
+        
+        specialOlympicsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have intellectual disability',
+            type: 'disability'
+        ))
+        specialOlympicsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Athletes must be 8 years old to compete (6+ for training)',
+            type: 'age'
+        ))
+        
+        specialOlympicsResource.save(failOnError: true)
+        
+        // Catholic Charities San Antonio - Financial Support
+        def catholicCharitiesResource = new Resource(
+            name: 'Catholic Charities San Antonio',
+            description: 'Catholic Charities provides comprehensive social services and assistance programs for individuals and families, including those with disabilities, through a network of over 40 bilingual and culturally sensitive programs.',
+            servicesOffered: '''• Emergency financial assistance for rent and utilities
+• Food pantry and clothing closet services
+• Legal guardianship services for individuals with disabilities
+• Case management and counseling services
+• Free tax preparation (VITA program)
+• Family support and parenting education
+• Refugee resettlement services
+• Senior services and support programs''',
+            hoursOfOperation: 'Monday-Friday 8:30 AM - 5:00 PM\nGuadalupe Community Center location available',
+            category: categories['Financial Support']
+        )
+        
+        catholicCharitiesResource.contact = new Contact(
+            phone: '(210) 222-1294',
+            email: 'info@ccaosa.org',
+            address: '1801 W César E Chávez Blvd',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78207',
+            website: 'https://ccaosa.org'
+        )
+        
+        catholicCharitiesResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Open to all individuals and families regardless of disability status',
+            type: 'other'
+        ))
+        catholicCharitiesResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Financial assistance based on demonstrated need',
+            type: 'income'
+        ))
+        
+        catholicCharitiesResource.save(failOnError: true)
+        
+        // San Antonio Founder Lions Club - Support/Community
+        def lionsClubResource = new Resource(
+            name: 'San Antonio Founder Lions Club',
+            description: 'The San Antonio Founder Lions Club advocates for the blind and visually impaired, funding eye exams and glasses for those in need in Bexar County with no vision coverage.',
+            servicesOffered: '''• Free eye exams and glasses for those without vision coverage
+• Mobile eye screening unit at public locations
+• Used eyeglasses collection and refurbishment program
+• Partnership with San Antonio Lighthouse for the Blind
+• Community vision awareness and screening events
+• Volunteer opportunities for vision-related services
+• Financial assistance for vision-related medical needs''',
+            hoursOfOperation: 'Contact for appointment scheduling\nScreening events held throughout the year',
+            category: categories['Support/Community']
+        )
+        
+        lionsClubResource.contact = new Contact(
+            phone: '(210) 495-5888',
+            email: 'info@saflc.org',
+            address: '4732 Whirlwind Dr',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78217',
+            website: 'https://saflc.org'
+        )
+        
+        lionsClubResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have no vision insurance coverage',
+            type: 'other'
+        ))
+        lionsClubResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must reside in Bexar County area',
+            type: 'other'
+        ))
+        
+        lionsClubResource.save(failOnError: true)
+        
+        // Texas Workforce Commission - Vocational Rehabilitation Services - Employment
+        def twcVRResource = new Resource(
+            name: 'Texas Workforce Commission - Vocational Rehabilitation Services',
+            description: 'TWC Vocational Rehabilitation helps people with disabilities prepare for, find, and keep meaningful careers through individualized services and partnerships with local workforce centers.',
+            servicesOffered: '''• Vocational counseling and career guidance
+• Skills assessment and vocational evaluations
+• Medical and psychological assessments
+• College, technical, and on-the-job training assistance
+• Job coaching and supported employment services
+• Assistive technology evaluation and training
+• Transportation assistance and vehicle modifications
+• Work incentive programs and benefits counseling
+• Partnership with Workforce Solutions Alamo''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nServices available at multiple Workforce Solutions locations',
+            featured: true,
+            category: categories['Employment']
+        )
+        
+        twcVRResource.contact = new Contact(
+            phone: '(512) 936-6400',
+            email: 'vr.office.locator@twc.texas.gov',
+            address: '3355 West Military Dr',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78211',
+            website: 'https://www.twc.texas.gov/services/vocational-rehabilitation-services'
+        )
+        
+        twcVRResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have a disability that results in barriers to employment',
+            type: 'disability'
+        ))
+        twcVRResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must need services to prepare for, obtain, or retain employment',
+            type: 'other'
+        ))
+        
+        twcVRResource.save(failOnError: true)
+        
+        // UTSA Student Disability Services - Education/Training
+        def utsaSDSResource = new Resource(
+            name: 'UTSA Student Disability Services',
+            description: 'Student Disability Services at UTSA promotes equal access for all university programs and activities for students with disabilities, providing comprehensive academic accommodations and support services.',
+            servicesOffered: '''• Academic accommodations and modifications
+• Assistive technology lab and training
+• Alternative testing arrangements in Adaptive Test Center
+• Note-taking assistance and services
+• Sign language interpreting services
+• Priority registration for classes
+• Disability counseling and advocacy
+• Campus accessibility consultations''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nAdaptive Test Center: Monday-Friday 8:00 AM - 5:00 PM',
+            category: categories['Education/Training']
+        )
+        
+        utsaSDSResource.contact = new Contact(
+            phone: '(210) 458-4157',
+            email: 'disability.services@utsa.edu',
+            address: 'Multidisciplinary Studies Bldg (MS) 3.01.16, One UTSA Circle',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78249',
+            website: 'https://www.utsa.edu/disability'
+        )
+        
+        utsaSDSResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must be enrolled or accepted at UTSA',
+            type: 'other'
+        ))
+        utsaSDSResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must provide documentation of disability',
+            type: 'disability'
+        ))
+        
+        utsaSDSResource.save(failOnError: true)
+        
+        // Texas Division of Blind Services - Education/Training
+        def dbsResource = new Resource(
+            name: 'Texas Division of Blind Services (TWC)',
+            description: 'The Division for Blind Services provides comprehensive vocational rehabilitation and independent living training to help Texans who are blind or visually impaired achieve their employment and independence goals.',
+            servicesOffered: '''• Vocational rehabilitation services
+• Independent Living Rehabilitation Program
+• Blind Children\'s Vocational Discovery and Development Program
+• Transition Program for students
+• Blindness Education, Screening and Treatment Program
+• Texas Talking Book Program (free library services)
+• Independent Living Services for Older Individuals (55+)
+• Assistive technology training and evaluation''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nOlder Individuals Blind Program: 1-844-633-3642',
+            category: categories['Education/Training']
+        )
+        
+        dbsResource.contact = new Contact(
+            phone: '(210) 785-2750',
+            email: 'dbs@twc.state.tx.us',
+            address: '4204 Woodcock Dr, Suite 274',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78228',
+            website: 'https://www.twc.texas.gov/programs/vocational-rehabilitation/blind-services'
+        )
+        
+        dbsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must be blind or visually impaired',
+            type: 'disability'
+        ))
+        dbsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Children\'s program serves individuals under 22',
+            type: 'age'
+        ))
+        
+        dbsResource.save(failOnError: true)
+        
+        // St. Vincent de Paul San Antonio - Financial Support
+        def svdpResource = new Resource(
+            name: 'St. Vincent de Paul San Antonio',
+            description: 'The Society of St. Vincent de Paul provides over $10 million in services annually including emergency financial assistance, food aid, and support services with special focus on veterans, the disabled, and seniors.',
+            servicesOffered: '''• Emergency rental and utility assistance
+• Food pantry and clothing assistance
+• Medical bill support and prescription assistance
+• Case management and budget counseling
+• Job training and employment support
+• Housing search and placement assistance
+• Disaster recovery services
+• Household items and furniture assistance''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\nEmergency assistance by appointment',
+            category: categories['Financial Support']
+        )
+        
+        svdpResource.contact = new Contact(
+            phone: '(210) 225-7837',
+            email: 'info@svdpsa.org',
+            address: '1222 N Main Ave, Suite 700',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78212',
+            website: 'https://www.svdpsa.org'
+        )
+        
+        svdpResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Priority given to veterans, disabled individuals, seniors, and families with children under 5',
+            type: 'other'
+        ))
+        svdpResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Financial assistance based on demonstrated need',
+            type: 'income'
+        ))
+        
+        svdpResource.save(failOnError: true)
+        
+        // San Antonio City Disability Access Office - Support/Community
+        def daoResource = new Resource(
+            name: 'San Antonio City Disability Access Office (DAO)',
+            description: 'The Disability Access Office works toward a universally designed environment that makes it easy for all people, regardless of disability, to participate fully in community life through policy review and direct assistance.',
+            servicesOffered: '''• ADA compliance assistance and information
+• Wheelchair access and mobility assistance
+• Disability access parking coordination
+• City policy and procedure accessibility review
+• Emergency planning for people with disabilities
+• Community accessibility advocacy
+• Disability Access Advisory Committee support
+• Universal design consultation services''',
+            hoursOfOperation: 'Monday-Friday 7:45 AM - 4:30 PM',
+            category: categories['Support/Community']
+        )
+        
+        daoResource.contact = new Contact(
+            phone: '(210) 207-7135',
+            email: 'dao@sanantonio.gov',
+            address: '203 S St Mary\'s St, Suite 120',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78205',
+            website: 'https://www.sanantonio.gov/dao'
+        )
+        
+        daoResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Open to all individuals with disabilities needing accessibility assistance',
+            type: 'disability'
+        ))
+        
+        daoResource.save(failOnError: true)
+        
+        log.info "Added 11 additional researched disability services to the database (July 2025)"
     }
 }

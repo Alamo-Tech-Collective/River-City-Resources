@@ -94,6 +94,9 @@ class BootStrap {
             // Support/Community Resources (4)
             createSupportCommunityResources(categories['Support/Community'])
             
+            // Additional Disability Services (Added January 2025)
+            createAdditionalDisabilityServices(categories)
+            
             log.info "Created ${Resource.count()} comprehensive test resources"
         }
     }
@@ -801,4 +804,258 @@ class BootStrap {
     // - idx_resource_featured ON resource(featured)
     // - idx_resource_active_category ON resource(active, category_id)
     // - Full-text search indexes on name, description, services_offered fields
+    
+    private void createAdditionalDisabilityServices(Map<String, Category> categories) {
+        // DisabilitySA - Support/Community
+        def disabilitySAResource = new Resource(
+            name: 'DisabilitySA',
+            description: 'DisabilitySA provides programs, resources, and volunteer opportunities to improve the lives of people with disabilities in San Antonio. They work closely with the City of San Antonio Disability Access Office and Bexar County TACPD.',
+            servicesOffered: '''• Community advocacy and awareness programs
+• Volunteer opportunities for and with people with disabilities
+• Resource navigation and referral services
+• Disability awareness training for businesses
+• Community events and inclusive activities
+• Partnership programs with local organizations
+• Educational workshops and seminars
+• Support for disability rights initiatives''',
+            hoursOfOperation: 'Monday-Friday 9:00 AM - 5:00 PM',
+            category: categories['Support/Community']
+        )
+        
+        disabilitySAResource.contact = new Contact(
+            phone: '(210) 477-7000',
+            email: 'info@disabilitysa.org',
+            address: '1222 N Main Ave, Suite 700',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78212',
+            website: 'https://www.disabilitysa.org'
+        )
+        
+        disabilitySAResource.save(failOnError: true)
+        
+        // SAILS - San Antonio Independent Living Services - Support/Community
+        def sailsResource = new Resource(
+            name: 'San Antonio Independent Living Services (SAILS)',
+            description: 'SAILS has served people with disabilities since 1981 as a federally and state-designated center for independent living. They provide comprehensive services to help individuals with disabilities live independently in the community.',
+            servicesOffered: '''• Independent living skills training
+• Benefits assistance and social security planning
+• Deaf support services and telecommunications assistance
+• Adaptive telecommunication device training
+• Relocation services from nursing facilities to community
+• Peer support and mentoring programs
+• Information and referral services
+• Recreation and social events for persons with disabilities
+• Rehabilitation technology through Outsourcing program
+• Assistive technology including ramps, wheelchairs, and vehicle modifications''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM',
+            featured: true,
+            category: categories['Support/Community']
+        )
+        
+        sailsResource.contact = new Contact(
+            phone: '(210) 281-1878',
+            email: 'info@sailstx.org',
+            address: '1028 S Alamo St',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78210',
+            website: 'https://www.sailstx.org'
+        )
+        
+        sailsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have a disability',
+            type: 'disability'
+        ))
+        
+        sailsResource.save(failOnError: true)
+        
+        // Sunshine Cottage School for Deaf Children - Education/Training
+        def sunshineCottageResource = new Resource(
+            name: 'Sunshine Cottage School for Deaf Children',
+            description: 'Sunshine Cottage promotes early identification and intervention for children who are deaf or hard of hearing, helping them develop their maximum potential through listening, spoken language, and literacy.',
+            servicesOffered: '''• Early childhood education for deaf/hard of hearing children
+• Auditory-verbal therapy
+• Speech and language therapy
+• Parent education and support programs
+• Hearing aid and cochlear implant support
+• Preschool through elementary education programs
+• Summer programs and camps
+• Community outreach and hearing screenings
+• Professional development for educators''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 4:30 PM\nSummer programs available',
+            category: categories['Education/Training']
+        )
+        
+        sunshineCottageResource.contact = new Contact(
+            phone: '(210) 824-0579',
+            email: 'info@sunshinecottage.org',
+            address: '603 E Hildebrand Ave',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78212',
+            website: 'https://www.sunshinecottage.org'
+        )
+        
+        sunshineCottageResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must be deaf or hard of hearing',
+            type: 'disability'
+        ))
+        sunshineCottageResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Ages 0-11 years for educational programs',
+            type: 'age'
+        ))
+        
+        sunshineCottageResource.save(failOnError: true)
+        
+        // STRAPS - South Texas Regional Adaptive & Para Sports - Support/Community
+        def strapsResource = new Resource(
+            name: 'STRAPS - South Texas Regional Adaptive & Para Sports',
+            description: 'STRAPS organizes, promotes, and conducts a variety of adaptive and Paralympic-style sports for wounded service members, veterans, and other adults and youth with physical disabilities.',
+            servicesOffered: '''• Wheelchair basketball leagues and tournaments
+• Wheelchair rugby programs
+• Wheelchair soccer and football
+• Adaptive softball and baseball
+• Sit volleyball programs
+• Power soccer for power wheelchair users
+• Goalball for visually impaired athletes
+• Boccia programs
+• Track and field training
+• Adaptive pickleball and tennis
+• Functional fitness programs
+• Equipment loans for sports participation''',
+            hoursOfOperation: 'Program times vary - Check website for schedule',
+            category: categories['Support/Community']
+        )
+        
+        strapsResource.contact = new Contact(
+            phone: '(210) 495-5888',
+            email: 'info@strapsports.org',
+            address: '5025 David Edwards Dr',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78233',
+            website: 'https://www.strapsports.org'
+        )
+        
+        strapsResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have a physical disability or visual impairment',
+            type: 'disability'
+        ))
+        
+        strapsResource.save(failOnError: true)
+        
+        // Disability Services of the Southwest - Multiple Categories
+        def dsswResource = new Resource(
+            name: 'Disability Services of the Southwest (DSSW)',
+            description: 'Founded in 1993, DSSW is one of the largest providers of support services to people with disabilities and the elderly in Texas, offering comprehensive in-home and community-based services.',
+            servicesOffered: '''• Personal attendant services
+• In-home nursing care
+• Physical, occupational, and speech therapies
+• Home modification and accessibility improvements
+• Adaptive aids and equipment
+• Job coaching and supported employment
+• Deaf-Blind with Multiple Disabilities (DBMD) services
+• Respite care services
+• Case management
+• Transportation assistance
+• Community integration support''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 5:00 PM\n24/7 on-call for emergencies',
+            featured: true,
+            category: categories['Support/Community']
+        )
+        
+        dsswResource.contact = new Contact(
+            phone: '(210) 674-3977',
+            email: 'info@dssw.org',
+            address: '1839 NE Loop 410, Suite 107',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78217',
+            website: 'https://www.dssw.org'
+        )
+        
+        dsswResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have a disability or be elderly requiring support services',
+            type: 'disability'
+        ))
+        
+        dsswResource.save(failOnError: true)
+        
+        // AccessAbility - Support/Community
+        def accessAbilityResource = new Resource(
+            name: 'AccessAbility Home Modifications',
+            description: 'AccessAbility provides home safety modifications for seniors and people with disabilities in San Antonio, helping them remain safely in their homes through accessibility improvements.',
+            servicesOffered: '''• Wheelchair ramp installation
+• Bathroom safety modifications
+• Grab bar and handrail installation
+• Door widening for wheelchair access
+• Threshold removal and modifications
+• Lever handle conversions
+• Accessible shower installations
+• Stair lift evaluations
+• Home accessibility assessments
+• Emergency repair services''',
+            hoursOfOperation: 'Monday-Friday 8:00 AM - 4:30 PM',
+            category: categories['Support/Community']
+        )
+        
+        accessAbilityResource.contact = new Contact(
+            phone: '(210) 477-3275',
+            email: 'info@accessabilitysa.org',
+            address: '8130 Broadway St, Suite 300',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78209',
+            website: 'https://www.accessabilitysa.org'
+        )
+        
+        accessAbilityResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must have mobility limitations or disability requiring home modifications',
+            type: 'disability'
+        ))
+        accessAbilityResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Income eligibility may apply for free services',
+            type: 'income'
+        ))
+        
+        accessAbilityResource.save(failOnError: true)
+        
+        // Respite Care of San Antonio - Support/Community
+        def respiteCareResource = new Resource(
+            name: 'Respite Care of San Antonio',
+            description: 'Respite Care of San Antonio provides temporary relief for caregivers of children with special needs and adults with disabilities, offering both in-home and facility-based respite services.',
+            servicesOffered: '''• In-home respite care services
+• Saturday respite program at facility
+• Summer camp programs
+• After-school programs
+• Parent Night Out events
+• Caregiver support groups
+• Emergency respite services
+• Trained respite care providers
+• Social activities for clients
+• Family support and resources''',
+            hoursOfOperation: 'Office: Monday-Friday 8:00 AM - 5:00 PM\nRespite services available evenings and weekends',
+            category: categories['Support/Community']
+        )
+        
+        respiteCareResource.contact = new Contact(
+            phone: '(210) 737-1212',
+            email: 'info@respitecaresa.org',
+            address: '5038 Wurzbach Rd',
+            city: 'San Antonio',
+            state: 'TX',
+            zipCode: '78238',
+            website: 'https://www.respitecaresa.org'
+        )
+        
+        respiteCareResource.addToEligibilityRequirements(new EligibilityRequirement(
+            requirement: 'Must be caring for someone with special needs or disabilities',
+            type: 'other'
+        ))
+        
+        respiteCareResource.save(failOnError: true)
+        
+        log.info "Added 7 additional disability services to the database (January 2025)"
+    }
 }

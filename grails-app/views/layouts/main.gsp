@@ -3,15 +3,53 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <!-- SEO Title Tag -->
     <title>
-        <g:layoutTitle default="${message(code: 'app.name')}"/>
+        <g:layoutTitle default="River City Resources - San Antonio Disability Resource Directory"/>
     </title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="${pageProperty(name: 'meta.description') ?: 'Find disability resources in San Antonio. Comprehensive directory of transportation, employment, education, financial support, and community services for individuals with disabilities.'}"/>
+    <meta name="keywords" content="${pageProperty(name: 'meta.keywords') ?: 'disability resources San Antonio, disability services, accessible transportation, disability employment, special education, financial assistance, community support'}"/>
+    <meta name="author" content="River City Resources"/>
+    
+    <!-- Mobile & Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="${createLink(absolute: true, uri: request.forwardURI)}"/>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "River City Resources",
+        "description": "Comprehensive directory of disability resources in San Antonio",
+        "url": "${createLink(absolute: true, uri: '/')}",
+        "logo": "${assetPath(src: 'logo.png', absolute: true)}",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "San Antonio",
+            "addressRegion": "TX",
+            "addressCountry": "US"
+        }
+    }
+    </script>
+    
+    <!-- Additional Structured Data from Pages -->
+    <g:pageProperty name="page.structuredData"/>
+    
+    <!-- Favicon -->
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
+    <link rel="apple-touch-icon" href="${assetPath(src: 'logo.png')}"/>
 
     <asset:stylesheet src="application.css"/>
     <asset:stylesheet src="accessibility.css"/>
     <asset:stylesheet src="admin-forms.css"/>
+    <asset:stylesheet src="seo-improvements.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <g:layoutHead/>

@@ -12,6 +12,10 @@ class UrlMappings {
         "500"(view:'/error')
         "404"(view:'/notFound')
         
+        // SEO-friendly URLs
+        "/sitemap.xml"(controller: 'sitemap', action: 'index')
+        "/robots.txt"(redirect: '/robots.txt')
+        
         // Admin routes
         "/admin"(controller:"admin", action:"index")
         "/admin/resources"(controller:"resource", action:"index")

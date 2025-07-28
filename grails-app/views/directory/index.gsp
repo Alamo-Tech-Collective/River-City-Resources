@@ -2,7 +2,27 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title><g:message code="app.name"/> - <g:message code="app.tagline"/></title>
+    <title>San Antonio Disability Resources Directory | River City Resources</title>
+    <meta name="description" content="Find disability resources in San Antonio, TX. Browse our comprehensive directory of transportation, employment, education, financial support, and community services for people with disabilities."/>
+    <meta name="keywords" content="San Antonio disability resources, disability services directory, accessible transportation San Antonio, disability employment services, special education resources, financial assistance disabilities, community support San Antonio"/>
+    
+    <!-- Home Page Structured Data -->
+    <content tag="structuredData">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "River City Resources",
+            "description": "San Antonio's comprehensive disability resources directory",
+            "url": "${createLink(absolute: true, uri: '/')}",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "${createLink(absolute: true, controller: 'directory', action: 'search')}?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+        </script>
+    </content>
     <style>
         .category-card {
             margin-bottom: 20px;
@@ -37,8 +57,8 @@
 <body>
     <div class="hero-section">
         <div class="container">
-            <h1 class="text-center mb-4"><g:message code="app.name"/></h1>
-            <p class="text-center lead mb-4"><g:message code="app.description"/></p>
+            <h1 class="text-center mb-4">River City Resources</h1>
+            <p class="text-center lead mb-4">A comprehensive directory of disability resources and services in San Antonio</p>
             
             <div class="search-box">
                 <g:form controller="directory" action="search" method="GET" class="form" role="search" aria-label="${message(code: 'search.title')}">

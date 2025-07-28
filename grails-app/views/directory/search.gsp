@@ -2,7 +2,41 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Search Results - River City Resources</title>
+    <title>Search Disability Resources in San Antonio | River City Resources</title>
+    <meta name="description" content="Search our comprehensive database of disability resources in San Antonio. Find transportation, employment, education, financial support, and community services tailored to your needs."/>
+    <meta name="keywords" content="search disability resources, find disability services San Antonio, disability resource search, accessible services finder"/>
+    
+    <!-- Structured Data for Search -->
+    <content tag="structuredData">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SearchResultsPage",
+            "name": "Disability Resource Search",
+            "description": "Search for disability resources and services in San Antonio",
+            <g:if test="${resources}">
+            "mainEntity": {
+                "@type": "ItemList",
+                "numberOfItems": ${resources.size()},
+                "itemListElement": [
+                    <g:each in="${resources}" var="resource" status="i">
+                    {
+                        "@type": "ListItem",
+                        "position": ${i + 1},
+                        "item": {
+                            "@type": "Organization",
+                            "name": "${resource.name}",
+                            "description": "${resource.description?.take(160)}",
+                            "url": "${createLink(absolute: true, action: 'resource', id: resource.id)}"
+                        }
+                    }<g:if test="${i < resources.size() - 1}">,</g:if>
+                    </g:each>
+                ]
+            }
+            </g:if>
+        }
+        </script>
+    </content>
     <asset:stylesheet src="search.css"/>
 </head>
 <body>

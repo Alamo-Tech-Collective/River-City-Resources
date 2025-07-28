@@ -1,0 +1,138 @@
+/* SEO and Accessibility Improvements */
+
+/* Ensure good color contrast for accessibility and readability */
+body {
+    color: #212529; /* Dark gray for better contrast */
+    line-height: 1.6; /* Improved readability */
+}
+
+/* Improve link visibility */
+a {
+    color: #0056b3; /* Darker blue for better contrast */
+    text-decoration: underline;
+}
+
+a:hover, a:focus {
+    color: #004085;
+    text-decoration: none;
+}
+
+/* Ensure headings are properly sized and have good contrast */
+h1, h2, h3, h4, h5, h6 {
+    color: #212529;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+/* Improve readability of lead paragraphs */
+.lead {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Ensure skip links are visible when focused */
+.sr-only-focusable:focus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Improve breadcrumb visibility */
+.breadcrumb {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Card improvements for better structure */
+.card {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+.card-title {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* Improve table accessibility */
+table {
+    caption-side: top;
+}
+
+th {
+    font-weight: 600;
+    color: #212529;
+}
+
+/* Footer improvements */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    color: #f8f9fa;
+}
+
+.footer h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Improve form accessibility */
+label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Ensure good print styles for accessibility */
+@media print {
+    .navbar, .footer, .btn, .pagination {
+        display: none !important;
+    }
+    
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+    
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* Mobile optimization */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .lead {
+        font-size: 1.1rem;
+    }
+}

@@ -3,6 +3,8 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Admin Login - River City Resources</title>
+    <meta name="description" content="Login to manage disability resources in the River City Resources directory. Admin access only."/>
+    <meta name="robots" content="noindex, nofollow"/>
     <style>
         .login-container {
             max-width: 400px;

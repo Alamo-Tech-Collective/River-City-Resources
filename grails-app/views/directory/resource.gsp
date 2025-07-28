@@ -2,7 +2,41 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>${resource.name} - River City Resources</title>
+    <title>${resource.name} - Disability Resource in San Antonio | River City Resources</title>
+    <meta name="description" content="${resource.name} provides ${resource.servicesOffered?.take(120)?.replaceAll('\n', ', ') ?: 'disability services'} in San Antonio. Contact: ${resource.contact?.phone ?: 'See details'}. ${resource.description?.take(100)}"/>
+    <meta name="keywords" content="${resource.name}, ${resource.category.name} San Antonio, disability services, ${resource.servicesOffered?.split('\n')?.take(3)?.join(', ')}"/>
+    
+    <!-- Structured Data for Organization -->
+    <content tag="structuredData">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "${resource.name}",
+            "description": "${resource.description}",
+            <g:if test="${resource.contact?.phone}">
+            "telephone": "${resource.contact.phone}",
+            </g:if>
+            <g:if test="${resource.contact?.website}">
+            "url": "${resource.contact.website}",
+            </g:if>
+            <g:if test="${resource.contact?.email}">
+            "email": "${resource.contact.email}",
+            </g:if>
+            <g:if test="${resource.contact?.address}">
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "${resource.contact.address}",
+                "addressLocality": "${resource.contact.city ?: 'San Antonio'}",
+                "addressRegion": "${resource.contact.state ?: 'TX'}"
+            },
+            </g:if>
+            "areaServed": "San Antonio",
+            "serviceType": "${resource.category.name}",
+            "knowsAbout": "${resource.servicesOffered}"
+        }
+        </script>
+    </content>
     <style>
         .resource-header {
             background-color: #f8f9fa;

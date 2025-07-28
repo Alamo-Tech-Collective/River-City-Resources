@@ -22,6 +22,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     // Language switching (must be public)
     [pattern: '/language/**',    access: ['permitAll']],
     
+    // SEO files (must be public)
+    [pattern: '/robots.txt',     access: ['permitAll']],
+    
     // Admin only access
     [pattern: '/resource/**',    access: ['ROLE_ADMIN']],
     [pattern: '/category/**',    access: ['ROLE_ADMIN']],

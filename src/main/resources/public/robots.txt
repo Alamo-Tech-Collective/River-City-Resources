@@ -1,0 +1,30 @@
+# Robots.txt for River City Resources
+# Allow all crawlers to access the site
+
+User-agent: *
+Allow: /
+
+# Specific paths
+Allow: /directory/
+Allow: /directory/search
+Allow: /directory/resource/
+Allow: /directory/category/
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /resource/create
+Disallow: /resource/edit/
+Disallow: /resource/delete/
+Disallow: /resource/save
+Disallow: /resource/update/
+Disallow: /category/create
+Disallow: /category/edit/
+Disallow: /category/delete/
+
+# Crawl delay (in seconds) - be nice to servers
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://www.rivercityresources.org/sitemap.xml

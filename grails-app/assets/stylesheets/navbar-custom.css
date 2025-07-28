@@ -88,6 +88,18 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Fix admin dropdown menu width and positioning */
+#adminDropdown + .dropdown-menu {
+    min-width: 200px;
+    right: 0;
+    left: auto;
+}
+
+#adminDropdown + .dropdown-menu .dropdown-item {
+    white-space: nowrap;
+    padding-right: 1.5rem;
+}
+
 /* Skip Navigation Link */
 .skip-nav {
     position: absolute;

@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
     <head>
-        <title><g:if env="development">Grails Runtime Exception</g:if><g:else>Error</g:else></title>
         <meta name="layout" content="main">
+        <title>Error - River City Resources</title>
+        <meta name="description" content="An error occurred. Please try again or contact support."/>
+        <meta name="robots" content="noindex, nofollow"/>
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
     <body>
@@ -23,9 +25,27 @@
             </g:else>
         </g:if>
         <g:else>
-            <ul class="errors">
-                <li>An error has occurred</li>
-            </ul>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h1 class="display-1">500</h1>
+                        <h2>Oops! Something went wrong</h2>
+                        <p class="lead">We're sorry, but an error occurred while processing your request.</p>
+                        
+                        <div class="mt-4">
+                            <h3>What can you do?</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="${createLink(uri: '/')}" class="btn btn-primary">Go to Homepage</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="${createLink(controller: 'directory', action: 'search')}" class="btn btn-outline-primary">Search Resources</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </g:else>
     </body>
 </html>

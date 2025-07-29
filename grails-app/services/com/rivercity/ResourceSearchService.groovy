@@ -2,6 +2,8 @@ package com.rivercity
 
 import grails.gorm.transactions.Transactional
 import grails.gorm.DetachedCriteria
+import riverCityResources.Resource
+import riverCityResources.Category
 
 @Transactional(readOnly = true)
 class ResourceSearchService {
@@ -52,7 +54,7 @@ class ResourceSearchService {
     }
     
     def getCategories() {
-        ResourceCategory.list(sort: 'name')
+        Category.list(sort: 'name')
     }
     
     def getResourcesByMultipleCategories(List<Long> categoryIds, Map params = [:]) {

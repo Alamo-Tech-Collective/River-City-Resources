@@ -11,7 +11,7 @@ buildscript {
 
 plugins {
     id "groovy"
-    id "com.github.erdi.webdriver-binaries" version "3.2"
+    // id "com.github.erdi.webdriver-binaries" version "3.2" // Removed - not using browser tests
     //id "war"
     id "idea"
     id "com.bertramlabs.asset-pipeline" version "4.5.1"
@@ -35,15 +35,16 @@ repositories {
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
-configurations {
-    all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details->
-            if (details.requested.group == 'org.seleniumhq.selenium') {
-                details.useVersion('4.19.1')
-            }
-        }
-    }
-}
+// Removed selenium configuration - not using browser tests
+// configurations {
+//     all {
+//         resolutionStrategy.eachDependency { DependencyResolveDetails details->
+//             if (details.requested.group == 'org.seleniumhq.selenium') {
+//                 details.useVersion('4.19.1')
+//             }
+//         }
+//     }
+// }
 
 dependencies {
     profile "org.grails.profiles:web"
@@ -76,14 +77,14 @@ dependencies {
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.grails:grails-web-testing-support"
-    testImplementation "org.grails.plugins:geb"
-    testImplementation "org.seleniumhq.selenium:selenium-api:4.19.1"
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:4.19.1"
-    testImplementation "org.seleniumhq.selenium:selenium-support:4.19.1"
+    // testImplementation "org.grails.plugins:geb"  // Removed - not using browser tests
+    // testImplementation "org.seleniumhq.selenium:selenium-api:4.19.1"
+    // testImplementation "org.seleniumhq.selenium:selenium-remote-driver:4.19.1"
+    // testImplementation "org.seleniumhq.selenium:selenium-support:4.19.1"
     testImplementation "org.spockframework:spock-core"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.19.1"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.19.1"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-safari-driver:4.19.1"
+    // testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.19.1"
+    // testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.19.1"
+    // testRuntimeOnly "org.seleniumhq.selenium:selenium-safari-driver:4.19.1"
 }
 
 application {
@@ -96,16 +97,13 @@ java {
 
 tasks.withType(Test) {
     useJUnitPlatform()
-    systemProperty "geb.env", System.getProperty('geb.env')
-    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
-    systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
-    systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
+    // Removed geb and webdriver configuration - not using browser tests
 }
-webdriverBinaries {
-    chromedriver '126.0.6478.182'
-    geckodriver '0.33.0'
-    edgedriver '110.0.1587.57'
-}
+// webdriverBinaries {
+//     chromedriver '126.0.6478.182'
+//     geckodriver '0.33.0'
+//     edgedriver '110.0.1587.57'
+// }
 assets {
     minifyJs = true
     minifyCss = true

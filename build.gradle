@@ -12,11 +12,16 @@ buildscript {
 plugins {
     id "groovy"
     id "com.github.erdi.webdriver-binaries" version "3.2"
-    id "war"
+    //id "war"
     id "idea"
     id "com.bertramlabs.asset-pipeline" version "4.5.1"
     id "application"
     id "eclipse"
+}
+
+tasks.named("jar") {
+    archiveClassifier = ''
+    enabled = false
 }
 
 // Not Published to Gradle Plugin Portal

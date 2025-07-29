@@ -23,9 +23,35 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
+          cache-read-only: false
+
+      - name: Run tests
+        run: ./gradlew test integrationTest
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            build/test-results/test/
+            build/test-results/integrationTest/
+            build/reports/tests/
+          retention-days: 7
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Gradle Test Report
+          path: 'build/test-results/**/TEST-*.xml'
+          reporter: java-junit
+          fail-on-error: false
 
       - name: Build with Gradle
-        run: ./gradlew clean assemble -x test
+        run: ./gradlew clean assemble
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4

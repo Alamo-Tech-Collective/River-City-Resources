@@ -2,13 +2,14 @@ package riverCityResources
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_ADMIN'])
 class UserController {
 
     UserService userService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", changePassword: "POST", toggleStatus: "POST"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", toggleStatus: "POST"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

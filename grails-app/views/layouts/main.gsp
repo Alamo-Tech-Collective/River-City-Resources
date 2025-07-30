@@ -157,14 +157,13 @@
                     <ul class="list-unstyled">
                         <li><g:link controller="directory" action="index"><g:message code="nav.home"/></g:link></li>
                         <li><g:link controller="directory" action="search"><g:message code="nav.search"/> <g:message code="nav.resources"/></g:link></li>
-                        <li><a href="#"><g:message code="nav.about"/></a></li>
-                        <li><a href="#"><g:message code="nav.contact"/></a></li>
+                        <li><a href="/about"><g:message code="nav.about"/></a></li>
                     </ul>
                 </nav>
             </div>
             <div class="col-md-4">
                 <h3><g:message code="footer.accessibility"/></h3>
-                <p>This website is designed to be accessible to all users. If you experience any difficulties, please <a href="#" aria-label="Contact us for accessibility support">contact us</a>.</p>
+                <p>This website is designed to be accessible to all users. If you experience any difficulties, please <a href="https://alamotechcollective.com" target="_blank" rel="noopener noreferrer" aria-label="Visit us for accessibility support">visit us</a>.</p>
             </div>
         </div>
         <hr>

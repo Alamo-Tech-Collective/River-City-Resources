@@ -25,5 +25,6 @@ class UrlMappings {
         "/login"(controller:"login", action:"auth")
         "/login/authfail"(controller:"login", action:"authfail")
 
+        "/about"(view:'/directory/about')
     }
 }

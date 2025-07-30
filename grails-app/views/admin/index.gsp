@@ -139,6 +139,30 @@
                 <div class="col-md-6 col-lg-3 mb-3">
                     <div class="card h-100">
                         <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x text-danger mb-3"></i>
+                            <h5 class="card-title">Users</h5>
+                            <p class="card-text">Manage admin users and passwords</p>
+                            <g:link controller="user" action="index" class="btn btn-danger btn-block">
+                                Manage Users
+                            </g:link>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-key fa-3x text-secondary mb-3"></i>
+                            <h5 class="card-title">My Password</h5>
+                            <p class="card-text">Change your own password</p>
+                            <g:link controller="user" action="changeOwnPassword" class="btn btn-secondary btn-block">
+                                Change Password
+                            </g:link>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
                             <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
                             <h5 class="card-title">Reports</h5>
                             <p class="card-text">View usage statistics and reports</p>

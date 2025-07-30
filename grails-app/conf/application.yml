@@ -78,7 +78,7 @@ environments:
       dbCreate: update
       driverClassName: com.mysql.cj.jdbc.Driver
       dialect: org.hibernate.dialect.MySQL8Dialect
-      url: ${DATABASE_URL:jdbc:mysql://localhost:3306/rivercityresources?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+      url: ${DATABASE_URL:jdbc:mysql://${DATABASE_HOST:localhost}/rivercityresources?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
       username: ${DATABASE_USERNAME:grails}
       password: ${DATABASE_PASSWORD:grailspassword}
       properties:

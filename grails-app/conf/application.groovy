@@ -25,8 +25,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     // SEO files (must be public)
     [pattern: '/robots.txt',     access: ['permitAll']],
     
+    // Admin and Provider access to resources
+    [pattern: '/resource/**',    access: ['ROLE_ADMIN', 'ROLE_PROVIDER']],
+    
     // Admin only access
-    [pattern: '/resource/**',    access: ['ROLE_ADMIN']],
     [pattern: '/category/**',    access: ['ROLE_ADMIN']],
     [pattern: '/admin/**',       access: ['ROLE_ADMIN']],
     [pattern: '/user/**',        access: ['ROLE_ADMIN']],

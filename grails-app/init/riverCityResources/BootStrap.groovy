@@ -21,6 +21,7 @@ class BootStrap {
         if (Role.count() == 0) {
             def adminRole = new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
             def userRole = new Role(authority: 'ROLE_USER').save(failOnError: true)
+            def providerRole = new Role(authority: 'ROLE_PROVIDER').save(failOnError: true)
             
             log.info "Created initial security roles"
         }

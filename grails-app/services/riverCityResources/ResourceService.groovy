@@ -80,4 +80,69 @@ class ResourceService {
             }
         }
     }
+
+    /**
+     * List resources for a provider - shows all resources but with provider-specific context
+     * @param user The provider user
+     * @param args Map of arguments for pagination and sorting
+     * @return List of resources
+     */
+    List<Resource> listForProvider(User user, Map args) {
+        return Resource.createCriteria().list(args) {
+            // Show all resources (providers can see all)
+            // But we'll add context about which ones they can edit
+            order('name')
+        }
+    }
+
+    /**
+     * Count resources for a provider
+     * @param user The provider user
+     * @return Count of all resources
+     */
+    Long countForProvider(User user) {
+        return Resource.count()
+    }
+
+    /**
+     * Get resources submitted by a specific provider
+     * @param user The provider user
+     * @param args Map of arguments for pagination and sorting
+     * @return List of resources submitted by the provider
+     */
+    List<Resource> listByProvider(User user, Map args) {
+        return Resource.createCriteria().list(args) {
+            eq('submittedBy', user)
+            order('name')
+        }
+    }
+
+    /**
+     * Count resources submitted by a specific provider
+     * @param user The provider user
+     * @return Count of resources submitted by the provider
+     */
+    Long countByProvider(User user) {
+        return Resource.countBySubmittedBy(user)
+    }
+
+    /**
+     * Get pending resources for admin approval
+     * @param args Map of arguments for pagination and sorting
+     * @return List of pending resources
+     */
+    List<Resource> listPending(Map args) {
+        return Resource.createCriteria().list(args) {
+            eq('approvalStatus', 'pending')
+            order('dateCreated', 'desc')
+        }
+    }
+
+    /**
+     * Count pending resources
+     * @return Count of pending resources
+     */
+    Long countPending() {
+        return Resource.countByApprovalStatus('pending')
+    }
 }

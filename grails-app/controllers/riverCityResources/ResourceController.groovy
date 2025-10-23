@@ -243,16 +243,22 @@ class ResourceController {
             return
         }
         
-        def currentUser = springSecurityService.currentUser as User
-        resource.approvalStatus = 'rejected'
-        resource.approvedBy = currentUser
-        resource.approvedDate = new Date()
-        resource.rejectionReason = params.rejectionReason
-        
-        resourceService.save(resource)
-        
-        flash.message = "Resource rejected."
-        redirect action: 'index'
+        if (request.method == 'POST') {
+            // Process rejection
+            def currentUser = springSecurityService.currentUser as User
+            resource.approvalStatus = 'rejected'
+            resource.approvedBy = currentUser
+            resource.approvedDate = new Date()
+            resource.rejectionReason = params.rejectionReason
+            
+            resourceService.save(resource)
+            
+            flash.message = "Resource rejected successfully."
+            redirect action: 'index'
+        } else {
+            // Show rejection form
+            respond resource, model: [resource: resource]
+        }
     }
 
     protected void notFound() {

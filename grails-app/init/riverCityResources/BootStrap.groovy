@@ -7,8 +7,10 @@ class BootStrap {
     def init = { servletContext ->
         createInitialSecurityRoles()
         createInitialAdminUser()
+        createProviderUsers()
         createInitialCategories()
         createComprehensiveTestData()
+        createProviderTestResources()
         // Database indexes would be created in production via database migrations
         // For now, we'll skip them in development
     }
@@ -44,6 +46,48 @@ class BootStrap {
             UserRole.create(adminUser, adminRole, true)
             
             log.info "Created initial admin user (username: admin, password: admin123)"
+        }
+    }
+    
+    @Transactional
+    void createProviderUsers() {
+        if (User.countByUsername('provider1') == 0) {
+            def providerRole = Role.findByAuthority('ROLE_PROVIDER')
+            
+            // Provider 1: Transportation Services
+            def provider1 = new User(
+                username: 'provider1',
+                password: 'provider123',
+                email: 'transport@example.org',
+                firstName: 'Maria',
+                lastName: 'Rodriguez',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider1, providerRole, true)
+            
+            // Provider 2: Employment Services
+            def provider2 = new User(
+                username: 'provider2',
+                password: 'provider123',
+                email: 'employment@example.org',
+                firstName: 'John',
+                lastName: 'Smith',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider2, providerRole, true)
+            
+            // Provider 3: Education Services
+            def provider3 = new User(
+                username: 'provider3',
+                password: 'provider123',
+                email: 'education@example.org',
+                firstName: 'Sarah',
+                lastName: 'Johnson',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider3, providerRole, true)
+            
+            log.info "Created 3 provider users (username: provider1/provider2/provider3, password: provider123)"
         }
     }
     
@@ -1465,5 +1509,101 @@ class BootStrap {
         daoResource.save(failOnError: true)
         
         log.info "Added 11 additional researched disability services to the database (July 2025)"
+    }
+    
+    @Transactional
+    void createProviderTestResources() {
+        // Only create if we don't have any provider-submitted resources yet
+        if (Resource.countBySubmittedByIsNotNull() == 0) {
+            def providers = [
+                User.findByUsername('provider1'),
+                User.findByUsername('provider2'),
+                User.findByUsername('provider3')
+            ]
+            
+            def categories = [
+                'Transportation': Category.findByName('Transportation'),
+                'Employment': Category.findByName('Employment'),
+                'Education/Training': Category.findByName('Education/Training')
+            ]
+            
+            // Provider 1 - Transportation (Pending)
+            def pendingTransport = new Resource(
+                name: 'Accessible Ride Services',
+                description: 'A new transportation service providing wheelchair-accessible rides throughout San Antonio.',
+                servicesOffered: '''• Door-to-door accessible transportation
+• Wheelchair accessible vehicles
+• Trained drivers
+• 24/7 availability''',
+                hoursOfOperation: '24/7 service available',
+                approvalStatus: 'pending',
+                submittedBy: providers[0],
+                category: categories['Transportation']
+            )
+            pendingTransport.contact = new Contact(
+                phone: '(210) 555-0101',
+                email: 'info@accessibleride.org',
+                address: '123 Main St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78201',
+                website: 'https://www.accessibleride.org'
+            )
+            pendingTransport.save(failOnError: true)
+            
+            // Provider 2 - Employment (Approved)
+            def approvedEmployment = new Resource(
+                name: 'Career Development Center',
+                description: 'Comprehensive employment services for individuals with disabilities.',
+                servicesOffered: '''• Job placement assistance
+• Resume writing workshops
+• Interview preparation
+• Career counseling''',
+                hoursOfOperation: 'Monday-Friday 9:00 AM - 5:00 PM',
+                approvalStatus: 'approved',
+                submittedBy: providers[1],
+                approvedBy: User.findByUsername('admin'),
+                approvedDate: new Date(),
+                category: categories['Employment']
+            )
+            approvedEmployment.contact = new Contact(
+                phone: '(210) 555-0102',
+                email: 'careers@careerdev.org',
+                address: '456 Oak St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78202',
+                website: 'https://www.careerdev.org'
+            )
+            approvedEmployment.save(failOnError: true)
+            
+            // Provider 3 - Education (Rejected)
+            def rejectedEducation = new Resource(
+                name: 'Quick Learning Solutions',
+                description: 'Fast-track education programs for adults with disabilities.',
+                servicesOffered: '''• Accelerated learning programs
+• Online courses
+• Certification programs''',
+                hoursOfOperation: 'Monday-Saturday 8:00 AM - 8:00 PM',
+                approvalStatus: 'rejected',
+                submittedBy: providers[2],
+                approvedBy: User.findByUsername('admin'),
+                approvedDate: new Date(),
+                rejectionReason: 'Insufficient documentation and unclear service descriptions. Please provide more detailed information about accreditation and specific services offered.',
+                category: categories['Education/Training']
+            )
+            rejectedEducation.contact = new Contact(
+                phone: '(210) 555-0103',
+                email: 'info@quicklearn.org',
+                address: '789 Pine St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78203',
+                website: 'https://www.quicklearn.org'
+            )
+            rejectedEducation.save(failOnError: true)
+            
+            log.info "Created 3 provider test resources with different approval statuses"
+        }
     }
 }

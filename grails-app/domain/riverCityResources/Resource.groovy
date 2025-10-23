@@ -32,6 +32,8 @@ class Resource {
         category nullable: false
         approvalStatus inList: ['pending', 'approved', 'rejected']
         submittedBy nullable: true
+        approvedBy nullable: true
+        approvedDate nullable: true
         rejectionReason nullable: true, maxSize: 500
     }
 

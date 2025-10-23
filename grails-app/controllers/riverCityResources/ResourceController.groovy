@@ -16,7 +16,7 @@ class ResourceController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = springSecurityService.hasRole('ROLE_PROVIDER')
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         if (isProvider) {
             // Providers can see all resources but only edit their own
@@ -45,7 +45,7 @@ class ResourceController {
         }
         
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = springSecurityService.hasRole('ROLE_PROVIDER')
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         // Handle contact information
         if (params.contact) {
@@ -105,7 +105,7 @@ class ResourceController {
         }
         
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = springSecurityService.hasRole('ROLE_PROVIDER')
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         // Check if provider can edit this resource
         if (isProvider && resource.submittedBy != currentUser) {
@@ -124,7 +124,7 @@ class ResourceController {
         }
         
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = springSecurityService.hasRole('ROLE_PROVIDER')
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         // Check if provider can edit this resource
         if (isProvider && resource.submittedBy != currentUser) {
@@ -195,7 +195,7 @@ class ResourceController {
         }
         
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = springSecurityService.hasRole('ROLE_PROVIDER')
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         // Only admins can delete resources
         if (isProvider) {

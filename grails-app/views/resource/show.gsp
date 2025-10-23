@@ -50,7 +50,7 @@
                         </g:if>
                         
                         <!-- Provider Context Information -->
-                        <g:if test="${springSecurityService.hasRole('ROLE_PROVIDER') && resource.submittedBy?.id == springSecurityService.currentUser?.id}">
+                        <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' } && resource.submittedBy?.id == springSecurityService.currentUser?.id}">
                             <div class="alert alert-info mb-4" role="status" aria-live="polite">
                                 <h3 class="alert-heading h5">Your Submitted Resource</h3>
                                 <p class="mb-0">This is a resource you submitted. You can edit it, but changes will require re-approval.</p>
@@ -60,7 +60,7 @@
                         <f:display bean="resource" />
                         
                         <!-- Approval Information for Admins -->
-                        <g:if test="${springSecurityService.hasRole('ROLE_ADMIN')}">
+                        <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
                             <div class="card mt-4">
                                 <div class="card-header">
                                     <h3 class="h5 mb-0">Approval Information</h3>
@@ -109,14 +109,14 @@
                             <legend class="sr-only">Resource Actions</legend>
                             <div class="btn-group" role="group" aria-label="Resource actions">
                                 <!-- Edit button - only for admins or resource submitter -->
-                                <g:if test="${!springSecurityService.hasRole('ROLE_PROVIDER') || resource.submittedBy?.id == springSecurityService.currentUser?.id}">
+                                <g:if test="${!springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' } || resource.submittedBy?.id == springSecurityService.currentUser?.id}">
                                     <g:link class="btn btn-primary" action="edit" resource="${this.resource}" aria-label="Edit this resource">
                                         <i class="fas fa-edit" aria-hidden="true"></i> <g:message code="default.button.edit.label" default="Edit" />
                                     </g:link>
                                 </g:if>
                                 
                                 <!-- Admin approval actions -->
-                                <g:if test="${springSecurityService.hasRole('ROLE_ADMIN') && resource.approvalStatus == 'pending'}">
+                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' } && resource.approvalStatus == 'pending'}">
                                     <g:link class="btn btn-success" action="approve" id="${resource.id}"
                                             onclick="return confirm('Approve this resource?')"
                                             aria-label="Approve this resource">
@@ -129,7 +129,7 @@
                                 </g:if>
                                 
                                 <!-- Delete button - only for admins -->
-                                <g:if test="${springSecurityService.hasRole('ROLE_ADMIN')}">
+                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
                                     <g:form resource="${this.resource}" method="DELETE" style="display: inline;"
                                             onsubmit="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
                                         <button type="submit" class="btn btn-danger"

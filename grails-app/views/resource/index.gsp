@@ -27,7 +27,7 @@
                     </g:if>
                     
                     <!-- Provider Context Information -->
-                    <g:if test="${springSecurityService.hasRole('ROLE_PROVIDER')}">
+                    <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }}">
                         <div class="alert alert-info" role="status" aria-live="polite">
                             <h2 class="alert-heading h5">Provider Dashboard</h2>
                             <p class="mb-0">As a service provider, you can view all resources and edit only the ones you have submitted. Your submitted resources require admin approval before they appear in the public directory.</p>
@@ -88,7 +88,7 @@
                                                 </g:link>
                                                 
                                                 <!-- Edit button - only for admins or resource submitter -->
-                                                <g:if test="${!springSecurityService.hasRole('ROLE_PROVIDER') || resource.submittedBy?.id == springSecurityService.currentUser?.id}">
+                                                <g:if test="${!springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' } || resource.submittedBy?.id == springSecurityService.currentUser?.id}">
                                                     <g:link class="btn btn-sm btn-outline-secondary" action="edit" id="${resource.id}"
                                                             aria-label="Edit ${resource.name}">
                                                         <i class="fas fa-edit" aria-hidden="true"></i> Edit
@@ -96,7 +96,7 @@
                                                 </g:if>
                                                 
                                                 <!-- Admin approval actions -->
-                                                <g:if test="${springSecurityService.hasRole('ROLE_ADMIN') && resource.approvalStatus == 'pending'}">
+                                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' } && resource.approvalStatus == 'pending'}">
                                                     <g:link class="btn btn-sm btn-success" action="approve" id="${resource.id}"
                                                             onclick="return confirm('Approve this resource?')"
                                                             aria-label="Approve ${resource.name}">
@@ -109,7 +109,7 @@
                                                 </g:if>
                                                 
                                                 <!-- Delete button - only for admins -->
-                                                <g:if test="${springSecurityService.hasRole('ROLE_ADMIN')}">
+                                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
                                                     <g:form resource="${resource}" method="DELETE" style="display: inline;"
                                                             onsubmit="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
                                                         <button type="submit" class="btn btn-sm btn-outline-danger"

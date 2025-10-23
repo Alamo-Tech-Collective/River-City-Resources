@@ -1,0 +1,243 @@
+---
+description: "Accessibility rules for WCAG 2.1 AA compliance in River City Resources"
+globs: ["**/*.gsp", "**/*.html", "**/*.css", "**/*.js"]
+alwaysApply: true
+---
+
+# Accessibility Rules - River City Resources
+
+## WCAG 2.1 AA Compliance Requirements
+
+**CRITICAL**: This is a disability resources application. All code must maintain the highest accessibility standards.
+
+### HTML Semantics & Structure
+
+1. **Semantic HTML Elements**:
+   ```gsp
+   <nav role="navigation" aria-label="Main navigation">
+   <main role="main">
+   <section aria-labelledby="section-heading">
+   <article>
+   <header>
+   <footer>
+   ```
+
+2. **Heading Hierarchy**:
+   ```gsp
+   <h1>Page Title</h1>
+   <h2>Section Title</h2>
+   <h3>Subsection Title</h3>
+   <!-- Never skip heading levels -->
+   ```
+
+3. **Landmark Roles**:
+   ```gsp
+   <nav role="navigation" aria-label="Main navigation">
+   <main role="main">
+   <aside role="complementary">
+   <footer role="contentinfo">
+   ```
+
+### Form Accessibility
+
+1. **Label Association**:
+   ```gsp
+   <label for="organizationName">Organization Name</label>
+   <input type="text" id="organizationName" name="organizationName" required>
+   ```
+
+2. **Fieldset and Legend**:
+   ```gsp
+   <fieldset>
+       <legend>Contact Information</legend>
+       <label for="email">Email</label>
+       <input type="email" id="email" name="email">
+   </fieldset>
+   ```
+
+3. **Error Messages**:
+   ```gsp
+   <div id="orgNameError" role="alert" aria-live="polite" class="error-message">
+       Organization name is required
+   </div>
+   ```
+
+4. **Help Text**:
+   ```gsp
+   <label for="organizationName">Organization Name</label>
+   <input type="text" id="organizationName" name="organizationName" 
+          aria-describedby="orgNameHelp" required>
+   <div id="orgNameHelp" class="help-text">Enter the full organization name</div>
+   ```
+
+### Keyboard Navigation
+
+1. **Tab Order**:
+   - Ensure logical tab order
+   - Use `tabindex` sparingly and correctly
+   - All interactive elements must be keyboard accessible
+
+2. **Focus Management**:
+   ```gsp
+   <button aria-label="Search resources" type="submit" 
+           onfocus="this.style.outline='2px solid #005fcc'">
+   ```
+
+3. **Skip Links**:
+   ```gsp
+   <a href="#main-content" class="skip-link">Skip to main content</a>
+   <main id="main-content">
+   ```
+
+### ARIA Labels and Descriptions
+
+1. **ARIA Labels**:
+   ```gsp
+   <button aria-label="Search resources" type="submit">
+   <div role="alert" aria-live="polite">Search results updated</div>
+   <span aria-label="Close dialog">×</span>
+   ```
+
+2. **ARIA Described By**:
+   ```gsp
+   <input type="text" aria-describedby="searchHelp">
+   <div id="searchHelp">Enter keywords to search resources</div>
+   ```
+
+3. **ARIA Live Regions**:
+   ```gsp
+   <div role="status" aria-live="polite" id="searchStatus">
+       Search results updated
+   </div>
+   ```
+
+### Color and Contrast
+
+1. **Color Contrast**:
+   - Minimum 4.5:1 for normal text
+   - Minimum 3:1 for large text
+   - Never rely on color alone to convey information
+
+2. **Color Independence**:
+   ```gsp
+   <!-- Bad: Color only -->
+   <span style="color: red;">Required</span>
+   
+   <!-- Good: Color + text -->
+   <span style="color: red;" aria-label="Required">Required *</span>
+   ```
+
+### Images and Media
+
+1. **Alt Text**:
+   ```gsp
+   <img src="logo.png" alt="River City Resources logo">
+   <img src="decorative.png" alt="">
+   ```
+
+2. **Complex Images**:
+   ```gsp
+   <img src="chart.png" alt="Bar chart showing resource distribution by category">
+   ```
+
+### Tables
+
+1. **Table Headers**:
+   ```gsp
+   <table>
+       <thead>
+           <tr>
+               <th scope="col">Organization</th>
+               <th scope="col">Category</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <th scope="row">Example Org</th>
+               <td>Transportation</td>
+           </tr>
+       </tbody>
+   </table>
+   ```
+
+### Interactive Elements
+
+1. **Buttons and Links**:
+   ```gsp
+   <button type="button" aria-expanded="false" aria-controls="menu">
+       Menu
+   </button>
+   <ul id="menu" role="menu">
+       <li role="menuitem"><a href="/resources">Resources</a></li>
+   </ul>
+   ```
+
+2. **Form Controls**:
+   ```gsp
+   <select aria-label="Select category">
+       <option value="">Choose a category</option>
+       <option value="transportation">Transportation</option>
+   </select>
+   ```
+
+### Testing Requirements
+
+1. **Screen Reader Testing**:
+   - Test with NVDA, JAWS, or VoiceOver
+   - Verify all content is announced correctly
+   - Check navigation flow
+
+2. **Keyboard Testing**:
+   - Tab through all interactive elements
+   - Verify focus indicators are visible
+   - Test all functionality with keyboard only
+
+3. **Color Testing**:
+   - Use color contrast checkers
+   - Test with color blindness simulators
+   - Verify information isn't color-dependent
+
+### Common Accessibility Mistakes to Avoid
+
+1. **Missing Labels**:
+   ```gsp
+   <!-- Bad -->
+   <input type="text" name="search">
+   
+   <!-- Good -->
+   <label for="search">Search</label>
+   <input type="text" id="search" name="search">
+   ```
+
+2. **Poor Focus Management**:
+   ```gsp
+   <!-- Bad -->
+   <div onclick="doSomething()">Click me</div>
+   
+   <!-- Good -->
+   <button type="button" onclick="doSomething()">Click me</button>
+   ```
+
+3. **Missing ARIA Attributes**:
+   ```gsp
+   <!-- Bad -->
+   <div class="error">Error message</div>
+   
+   <!-- Good -->
+   <div class="error" role="alert" aria-live="polite">Error message</div>
+   ```
+
+### Accessibility Checklist
+
+- [ ] All images have appropriate alt text
+- [ ] All form inputs have labels
+- [ ] All interactive elements are keyboard accessible
+- [ ] Color contrast meets WCAG 2.1 AA standards
+- [ ] Heading hierarchy is logical
+- [ ] ARIA labels and descriptions are used appropriately
+- [ ] Focus indicators are visible
+- [ ] Error messages are announced to screen readers
+- [ ] Skip links are provided for main content
+- [ ] Tables have proper headers and scope attributes
+
+Remember: Accessibility is not optional for this disability resources application. Every user must be able to access and use all features.

@@ -1,5 +1,5 @@
 # Multi-stage build for Grails application
-FROM gradle:7.6.4-jdk17-alpine AS builder
+FROM gradle:7.6.4-jdk17-jammy AS builder
 
 # Set working directory
 WORKDIR /build

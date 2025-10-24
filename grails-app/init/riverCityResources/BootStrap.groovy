@@ -159,6 +159,7 @@ class BootStrap {
 • Trip planning assistance for riders with disabilities''',
             hoursOfOperation: 'VIAtrans: Monday-Saturday 5:00 AM - 1:00 AM, Sunday 5:00 AM - 12:00 AM\nCustomer Service: Monday-Friday 6:00 AM - 10:00 PM, Saturday 8:00 AM - 5:00 PM',
             featured: true,
+            approvalStatus: 'approved',
             category: category
         )
         
@@ -181,6 +182,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(viaResource)
         viaResource.save(failOnError: true)
         
         // Alamo Area Council of Governments (AACOG) Rural Transportation
@@ -216,6 +218,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(aacogResource)
         aacogResource.save(failOnError: true)
         
         // Yellow Cab Wheelchair Accessible Service
@@ -242,6 +245,7 @@ class BootStrap {
             website: 'https://www.yellowcabsanantonio.com'
         )
         
+        setApprovalFields(yellowCabResource)
         yellowCabResource.save(failOnError: true)
         
         // SAMM Ministries Transportation
@@ -277,6 +281,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(sammResource)
         sammResource.save(failOnError: true)
     }
     
@@ -312,6 +317,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(goodwillResource)
         goodwillResource.save(failOnError: true)
         
         // Texas Workforce Solutions Alamo
@@ -348,6 +354,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(twsResource)
         twsResource.save(failOnError: true)
         
         // Project SEARCH San Antonio
@@ -388,6 +395,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(projectSearchResource)
         projectSearchResource.save(failOnError: true)
         
         // RISE Recovery
@@ -424,6 +432,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(riseResource)
         riseResource.save(failOnError: true)
     }
     
@@ -464,6 +473,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(anyBabyCanResource)
         anyBabyCanResource.save(failOnError: true)
         
         // The Arc of San Antonio
@@ -496,6 +506,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(arcResource)
         arcResource.save(failOnError: true)
         
         // Learning Disabilities Association of America - San Antonio
@@ -528,6 +539,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(ldaResource)
         ldaResource.save(failOnError: true)
         
         // Palo Alto College Disability Support Services
@@ -565,6 +577,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(pacResource)
         pacResource.save(failOnError: true)
     }
     
@@ -608,6 +621,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(ssaResource)
         ssaResource.save(failOnError: true)
         
         // United Way 2-1-1
@@ -635,6 +649,7 @@ class BootStrap {
             website: 'https://www.211texas.org'
         )
         
+        setApprovalFields(unitedWayResource)
         unitedWayResource.save(failOnError: true)
         
         // Family Service Association
@@ -671,6 +686,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(fsaResource)
         fsaResource.save(failOnError: true)
         
         // Disability Rights Texas
@@ -703,6 +719,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(drtxResource)
         drtxResource.save(failOnError: true)
     }
     
@@ -739,6 +756,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(indHillResource)
         indHillResource.save(failOnError: true)
         
         // Morgan\'s Wonderland
@@ -772,6 +790,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(morgansResource)
         morgansResource.save(failOnError: true)
         
         // NAMI San Antonio
@@ -805,6 +824,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(namiResource)
         namiResource.save(failOnError: true)
         
         // Autism Community Network
@@ -838,6 +858,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(autismResource)
         autismResource.save(failOnError: true)
     }
     
@@ -877,6 +898,7 @@ class BootStrap {
             website: 'https://www.disabilitysa.org'
         )
         
+        setApprovalFields(disabilitySAResource)
         disabilitySAResource.save(failOnError: true)
         
         // SAILS - San Antonio Independent Living Services - Support/Community
@@ -913,6 +935,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(sailsResource)
         sailsResource.save(failOnError: true)
         
         // Sunshine Cottage School for Deaf Children - Education/Training
@@ -951,6 +974,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(sunshineCottageResource)
         sunshineCottageResource.save(failOnError: true)
         
         // STRAPS - South Texas Regional Adaptive & Para Sports - Support/Community
@@ -988,6 +1012,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(strapsResource)
         strapsResource.save(failOnError: true)
         
         // Disability Services of the Southwest - Multiple Categories
@@ -1025,6 +1050,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(dsswResource)
         dsswResource.save(failOnError: true)
         
         // AccessAbility - Support/Community
@@ -1064,6 +1090,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(accessAbilityResource)
         accessAbilityResource.save(failOnError: true)
         
         // Respite Care of San Antonio - Support/Community
@@ -1099,6 +1126,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(respiteCareResource)
         respiteCareResource.save(failOnError: true)
         
         log.info "Added 7 additional disability services to the database (January 2025)"
@@ -1140,6 +1168,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(chcsResource)
         chcsResource.save(failOnError: true)
         
         // Vibrant Works (formerly San Antonio Lighthouse for the Blind) - Support/Community  
@@ -1175,6 +1204,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(vibrantWorksResource)
         vibrantWorksResource.save(failOnError: true)
         
         // Easter Seals San Antonio Rehabilitation Center - Support/Community
@@ -1213,6 +1243,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(easterSealsResource)
         easterSealsResource.save(failOnError: true)
         
         // Special Olympics Texas - San Antonio Area - Support/Community
@@ -1250,6 +1281,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(specialOlympicsResource)
         specialOlympicsResource.save(failOnError: true)
         
         // Catholic Charities San Antonio - Financial Support
@@ -1287,6 +1319,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(catholicCharitiesResource)
         catholicCharitiesResource.save(failOnError: true)
         
         // San Antonio Founder Lions Club - Support/Community
@@ -1323,6 +1356,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(lionsClubResource)
         lionsClubResource.save(failOnError: true)
         
         // Texas Workforce Commission - Vocational Rehabilitation Services - Employment
@@ -1362,6 +1396,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(twcVRResource)
         twcVRResource.save(failOnError: true)
         
         // UTSA Student Disability Services - Education/Training
@@ -1399,6 +1434,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(utsaSDSResource)
         utsaSDSResource.save(failOnError: true)
         
         // Texas Division of Blind Services - Education/Training
@@ -1436,6 +1472,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(dbsResource)
         dbsResource.save(failOnError: true)
         
         // St. Vincent de Paul San Antonio - Financial Support
@@ -1473,6 +1510,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(svdpResource)
         svdpResource.save(failOnError: true)
         
         // San Antonio City Disability Access Office - Support/Community
@@ -1506,6 +1544,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(daoResource)
         daoResource.save(failOnError: true)
         
         log.info "Added 11 additional researched disability services to the database (July 2025)"
@@ -1605,5 +1644,12 @@ class BootStrap {
             
             log.info "Created 3 provider test resources with different approval statuses"
         }
+    }
+    
+    // Helper method to set approval fields for comprehensive test data
+    private void setApprovalFields(Resource resource) {
+        resource.approvalStatus = 'approved'
+        resource.approvedBy = User.findByUsername('admin')
+        resource.approvedDate = new Date()
     }
 }

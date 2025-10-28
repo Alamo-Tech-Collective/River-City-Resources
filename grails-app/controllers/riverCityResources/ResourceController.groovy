@@ -19,7 +19,7 @@ class ResourceController {
         def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         if (isProvider) {
-            // Providers can see all resources but only edit their own
+            // Providers can only see their own approved resources
             respond resourceService.listForProvider(currentUser, params), 
                    model:[resourceCount: resourceService.countForProvider(currentUser)]
         } else {

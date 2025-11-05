@@ -9,7 +9,25 @@ class ResourceControllerSpec extends Specification implements ControllerUnitTest
 
     def setup() {
         // Mock related domain classes
-        mockDomains(Category, Contact, EligibilityRequirement)
+        mockDomains(Category, Contact, EligibilityRequirement, User, Role, UserRole)
+        
+        // Mock Spring Security service
+        def springSecurityService = Mock(grails.plugin.springsecurity.SpringSecurityService)
+        springSecurityService.currentUser >> new User(username: 'testuser', email: 'test@example.com', firstName: 'Test', lastName: 'User', enabled: true)
+        springSecurityService.hasRole(_) >> { String role ->
+            if (role == 'ROLE_ADMIN') return true
+            if (role == 'ROLE_PROVIDER') return false
+            return false
+        }
+        controller.springSecurityService = springSecurityService
+        
+        // Mock ResourceService
+        def resourceService = Mock(riverCityResources.ResourceService)
+        resourceService.list(_) >> []
+        resourceService.count() >> 0
+        resourceService.listForProvider(_, _) >> []
+        resourceService.countForProvider(_) >> 0
+        controller.resourceService = resourceService
     }
 
     def populateValidParams(params) {

@@ -7,8 +7,10 @@ class BootStrap {
     def init = { servletContext ->
         createInitialSecurityRoles()
         createInitialAdminUser()
+        createProviderUsers()
         createInitialCategories()
         createComprehensiveTestData()
+        createProviderTestResources()
         // Database indexes would be created in production via database migrations
         // For now, we'll skip them in development
     }
@@ -21,6 +23,7 @@ class BootStrap {
         if (Role.count() == 0) {
             def adminRole = new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
             def userRole = new Role(authority: 'ROLE_USER').save(failOnError: true)
+            def providerRole = new Role(authority: 'ROLE_PROVIDER').save(failOnError: true)
             
             log.info "Created initial security roles"
         }
@@ -43,6 +46,48 @@ class BootStrap {
             UserRole.create(adminUser, adminRole, true)
             
             log.info "Created initial admin user (username: admin, password: admin123)"
+        }
+    }
+    
+    @Transactional
+    void createProviderUsers() {
+        if (User.countByUsername('provider1') == 0) {
+            def providerRole = Role.findByAuthority('ROLE_PROVIDER')
+            
+            // Provider 1: Transportation Services
+            def provider1 = new User(
+                username: 'provider1',
+                password: 'provider123',
+                email: 'transport@example.org',
+                firstName: 'Maria',
+                lastName: 'Rodriguez',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider1, providerRole, true)
+            
+            // Provider 2: Employment Services
+            def provider2 = new User(
+                username: 'provider2',
+                password: 'provider123',
+                email: 'employment@example.org',
+                firstName: 'John',
+                lastName: 'Smith',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider2, providerRole, true)
+            
+            // Provider 3: Education Services
+            def provider3 = new User(
+                username: 'provider3',
+                password: 'provider123',
+                email: 'education@example.org',
+                firstName: 'Sarah',
+                lastName: 'Johnson',
+                enabled: true
+            ).save(failOnError: true)
+            UserRole.create(provider3, providerRole, true)
+            
+            log.info "Created 3 provider users (username: provider1/provider2/provider3, password: provider123)"
         }
     }
     
@@ -114,6 +159,7 @@ class BootStrap {
 • Trip planning assistance for riders with disabilities''',
             hoursOfOperation: 'VIAtrans: Monday-Saturday 5:00 AM - 1:00 AM, Sunday 5:00 AM - 12:00 AM\nCustomer Service: Monday-Friday 6:00 AM - 10:00 PM, Saturday 8:00 AM - 5:00 PM',
             featured: true,
+            approvalStatus: 'approved',
             category: category
         )
         
@@ -136,6 +182,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(viaResource)
         viaResource.save(failOnError: true)
         
         // Alamo Area Council of Governments (AACOG) Rural Transportation
@@ -171,6 +218,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(aacogResource)
         aacogResource.save(failOnError: true)
         
         // Yellow Cab Wheelchair Accessible Service
@@ -197,6 +245,7 @@ class BootStrap {
             website: 'https://www.yellowcabsanantonio.com'
         )
         
+        setApprovalFields(yellowCabResource)
         yellowCabResource.save(failOnError: true)
         
         // SAMM Ministries Transportation
@@ -232,6 +281,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(sammResource)
         sammResource.save(failOnError: true)
     }
     
@@ -267,6 +317,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(goodwillResource)
         goodwillResource.save(failOnError: true)
         
         // Texas Workforce Solutions Alamo
@@ -303,6 +354,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(twsResource)
         twsResource.save(failOnError: true)
         
         // Project SEARCH San Antonio
@@ -343,6 +395,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(projectSearchResource)
         projectSearchResource.save(failOnError: true)
         
         // RISE Recovery
@@ -379,6 +432,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(riseResource)
         riseResource.save(failOnError: true)
     }
     
@@ -419,6 +473,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(anyBabyCanResource)
         anyBabyCanResource.save(failOnError: true)
         
         // The Arc of San Antonio
@@ -451,6 +506,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(arcResource)
         arcResource.save(failOnError: true)
         
         // Learning Disabilities Association of America - San Antonio
@@ -483,6 +539,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(ldaResource)
         ldaResource.save(failOnError: true)
         
         // Palo Alto College Disability Support Services
@@ -520,6 +577,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(pacResource)
         pacResource.save(failOnError: true)
     }
     
@@ -563,6 +621,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(ssaResource)
         ssaResource.save(failOnError: true)
         
         // United Way 2-1-1
@@ -590,6 +649,7 @@ class BootStrap {
             website: 'https://www.211texas.org'
         )
         
+        setApprovalFields(unitedWayResource)
         unitedWayResource.save(failOnError: true)
         
         // Family Service Association
@@ -626,6 +686,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(fsaResource)
         fsaResource.save(failOnError: true)
         
         // Disability Rights Texas
@@ -658,6 +719,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(drtxResource)
         drtxResource.save(failOnError: true)
     }
     
@@ -694,6 +756,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(indHillResource)
         indHillResource.save(failOnError: true)
         
         // Morgan\'s Wonderland
@@ -727,6 +790,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(morgansResource)
         morgansResource.save(failOnError: true)
         
         // NAMI San Antonio
@@ -760,6 +824,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(namiResource)
         namiResource.save(failOnError: true)
         
         // Autism Community Network
@@ -793,6 +858,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(autismResource)
         autismResource.save(failOnError: true)
     }
     
@@ -832,6 +898,7 @@ class BootStrap {
             website: 'https://www.disabilitysa.org'
         )
         
+        setApprovalFields(disabilitySAResource)
         disabilitySAResource.save(failOnError: true)
         
         // SAILS - San Antonio Independent Living Services - Support/Community
@@ -868,6 +935,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(sailsResource)
         sailsResource.save(failOnError: true)
         
         // Sunshine Cottage School for Deaf Children - Education/Training
@@ -906,6 +974,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(sunshineCottageResource)
         sunshineCottageResource.save(failOnError: true)
         
         // STRAPS - South Texas Regional Adaptive & Para Sports - Support/Community
@@ -943,6 +1012,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(strapsResource)
         strapsResource.save(failOnError: true)
         
         // Disability Services of the Southwest - Multiple Categories
@@ -980,6 +1050,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(dsswResource)
         dsswResource.save(failOnError: true)
         
         // AccessAbility - Support/Community
@@ -1019,6 +1090,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(accessAbilityResource)
         accessAbilityResource.save(failOnError: true)
         
         // Respite Care of San Antonio - Support/Community
@@ -1054,6 +1126,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(respiteCareResource)
         respiteCareResource.save(failOnError: true)
         
         log.info "Added 7 additional disability services to the database (January 2025)"
@@ -1095,6 +1168,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(chcsResource)
         chcsResource.save(failOnError: true)
         
         // Vibrant Works (formerly San Antonio Lighthouse for the Blind) - Support/Community  
@@ -1130,6 +1204,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(vibrantWorksResource)
         vibrantWorksResource.save(failOnError: true)
         
         // Easter Seals San Antonio Rehabilitation Center - Support/Community
@@ -1168,6 +1243,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(easterSealsResource)
         easterSealsResource.save(failOnError: true)
         
         // Special Olympics Texas - San Antonio Area - Support/Community
@@ -1205,6 +1281,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(specialOlympicsResource)
         specialOlympicsResource.save(failOnError: true)
         
         // Catholic Charities San Antonio - Financial Support
@@ -1242,6 +1319,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(catholicCharitiesResource)
         catholicCharitiesResource.save(failOnError: true)
         
         // San Antonio Founder Lions Club - Support/Community
@@ -1278,6 +1356,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(lionsClubResource)
         lionsClubResource.save(failOnError: true)
         
         // Texas Workforce Commission - Vocational Rehabilitation Services - Employment
@@ -1317,6 +1396,7 @@ class BootStrap {
             type: 'other'
         ))
         
+        setApprovalFields(twcVRResource)
         twcVRResource.save(failOnError: true)
         
         // UTSA Student Disability Services - Education/Training
@@ -1354,6 +1434,7 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(utsaSDSResource)
         utsaSDSResource.save(failOnError: true)
         
         // Texas Division of Blind Services - Education/Training
@@ -1391,6 +1472,7 @@ class BootStrap {
             type: 'age'
         ))
         
+        setApprovalFields(dbsResource)
         dbsResource.save(failOnError: true)
         
         // St. Vincent de Paul San Antonio - Financial Support
@@ -1428,6 +1510,7 @@ class BootStrap {
             type: 'income'
         ))
         
+        setApprovalFields(svdpResource)
         svdpResource.save(failOnError: true)
         
         // San Antonio City Disability Access Office - Support/Community
@@ -1461,8 +1544,112 @@ class BootStrap {
             type: 'disability'
         ))
         
+        setApprovalFields(daoResource)
         daoResource.save(failOnError: true)
         
         log.info "Added 11 additional researched disability services to the database (July 2025)"
+    }
+    
+    @Transactional
+    void createProviderTestResources() {
+        // Only create if we don't have any provider-submitted resources yet
+        if (Resource.countBySubmittedByIsNotNull() == 0) {
+            def providers = [
+                User.findByUsername('provider1'),
+                User.findByUsername('provider2'),
+                User.findByUsername('provider3')
+            ]
+            
+            def categories = [
+                'Transportation': Category.findByName('Transportation'),
+                'Employment': Category.findByName('Employment'),
+                'Education/Training': Category.findByName('Education/Training')
+            ]
+            
+            // Provider 1 - Transportation (Pending)
+            def pendingTransport = new Resource(
+                name: 'Accessible Ride Services',
+                description: 'A new transportation service providing wheelchair-accessible rides throughout San Antonio.',
+                servicesOffered: '''• Door-to-door accessible transportation
+• Wheelchair accessible vehicles
+• Trained drivers
+• 24/7 availability''',
+                hoursOfOperation: '24/7 service available',
+                approvalStatus: 'pending',
+                submittedBy: providers[0],
+                category: categories['Transportation']
+            )
+            pendingTransport.contact = new Contact(
+                phone: '(210) 555-0101',
+                email: 'info@accessibleride.org',
+                address: '123 Main St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78201',
+                website: 'https://www.accessibleride.org'
+            )
+            pendingTransport.save(failOnError: true)
+            
+            // Provider 2 - Employment (Approved)
+            def approvedEmployment = new Resource(
+                name: 'Career Development Center',
+                description: 'Comprehensive employment services for individuals with disabilities.',
+                servicesOffered: '''• Job placement assistance
+• Resume writing workshops
+• Interview preparation
+• Career counseling''',
+                hoursOfOperation: 'Monday-Friday 9:00 AM - 5:00 PM',
+                approvalStatus: 'approved',
+                submittedBy: providers[1],
+                approvedBy: User.findByUsername('admin'),
+                approvedDate: new Date(),
+                category: categories['Employment']
+            )
+            approvedEmployment.contact = new Contact(
+                phone: '(210) 555-0102',
+                email: 'careers@careerdev.org',
+                address: '456 Oak St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78202',
+                website: 'https://www.careerdev.org'
+            )
+            approvedEmployment.save(failOnError: true)
+            
+            // Provider 3 - Education (Rejected)
+            def rejectedEducation = new Resource(
+                name: 'Quick Learning Solutions',
+                description: 'Fast-track education programs for adults with disabilities.',
+                servicesOffered: '''• Accelerated learning programs
+• Online courses
+• Certification programs''',
+                hoursOfOperation: 'Monday-Saturday 8:00 AM - 8:00 PM',
+                approvalStatus: 'rejected',
+                submittedBy: providers[2],
+                approvedBy: User.findByUsername('admin'),
+                approvedDate: new Date(),
+                rejectionReason: 'Insufficient documentation and unclear service descriptions. Please provide more detailed information about accreditation and specific services offered.',
+                category: categories['Education/Training']
+            )
+            rejectedEducation.contact = new Contact(
+                phone: '(210) 555-0103',
+                email: 'info@quicklearn.org',
+                address: '789 Pine St',
+                city: 'San Antonio',
+                state: 'TX',
+                zipCode: '78203',
+                website: 'https://www.quicklearn.org'
+            )
+            rejectedEducation.save(failOnError: true)
+            
+            log.info "Created 3 provider test resources with different approval statuses"
+        }
+    }
+    
+    // Helper method to set approval fields for comprehensive test data
+    private void setApprovalFields(Resource resource) {
+        resource.approvalStatus = 'approved'
+        resource.approvedBy = User.findByUsername('admin')
+        resource.approvedDate = new Date()
     }
 }

@@ -12,6 +12,7 @@ out/
 .settings
 .classpath
 .factorypath
+tmp/
 
 # Environment files
 .env

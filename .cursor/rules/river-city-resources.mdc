@@ -1,0 +1,380 @@
+---
+description: "River City Resources - Grails 6.2.3 disability resources directory application rules"
+globs: ["**/*.groovy", "**/*.gsp", "**/*.gradle", "**/*.yml", "**/*.yaml", "**/*.js", "**/*.css"]
+alwaysApply: true
+---
+
+# River City Resources - Cursor Rules
+
+This document provides Cursor AI with specific guidance for working with the River City Resources codebase.
+
+## Project Overview
+
+River City Resources is a centralized directory for San Antonio disability resources built with Grails 6.2.3. The application provides a searchable, accessible directory of resources for individuals with disabilities, families, caregivers, and service providers.
+
+## Technology Stack
+
+- **Framework**: Grails 6.2.3
+- **Language**: Groovy
+- **Database**: H2 (development/test), MySQL (production)
+- **Security**: Spring Security Core 6.1.2
+- **Frontend**: Bootstrap, GSP templates, Asset Pipeline
+- **Testing**: Spock (unit), Geb/Selenium (integration)
+- **Build Tool**: Gradle
+- **Java Version**: 11
+
+## Code Standards & Conventions
+
+### Grails Architecture Patterns
+
+1. **Follow MVC Convention**:
+   - Domain classes in `grails-app/domain/` - GORM entities
+   - Controllers in `grails-app/controllers/` - Handle HTTP requests
+   - Services in `grails-app/services/` - Business logic (transactional by default)
+   - Views in `grails-app/views/` - GSP templates
+   - Assets in `grails-app/assets/` - CSS, JS, images
+
+2. **Domain Class Best Practices**:
+   ```groovy
+   class Resource {
+       String organizationName
+       String description
+       Date dateCreated
+       Date lastUpdated
+       
+       static constraints = {
+           organizationName blank: false, maxSize: 255
+           description blank: false, maxSize: 1000
+       }
+       
+       static mapping = {
+           description type: 'text'
+       }
+   }
+   ```
+
+3. **Service Layer Patterns**:
+   ```groovy
+   @Transactional
+   class ResourceService {
+       Resource saveResource(Resource resource) {
+           // Business logic here
+           return resource.save(flush: true)
+       }
+   }
+   ```
+
+4. **Controller Best Practices**:
+   ```groovy
+   class ResourceController {
+       ResourceService resourceService
+       
+       def index() {
+           [resources: Resource.list(params)]
+       }
+       
+       def save(Resource resource) {
+           if (resource.hasErrors()) {
+               respond resource.errors, view:'create'
+               return
+           }
+           resourceService.saveResource(resource)
+           redirect action: "show", id: resource.id
+       }
+   }
+   ```
+
+### Groovy Coding Standards
+
+1. **Use Grails Conventions**:
+   - Leverage GORM's automatic CRUD operations
+   - Use Grails constraints for validation
+   - Implement custom validators when needed
+   - Use data binding with command objects
+
+2. **Naming Conventions**:
+   - Domain classes: PascalCase (Resource, Category)
+   - Controllers: PascalCase + Controller suffix
+   - Services: PascalCase + Service suffix
+   - Methods: camelCase
+   - Properties: camelCase
+
+3. **Error Handling**:
+   ```groovy
+   try {
+       // operation
+   } catch (Exception e) {
+       log.error "Error occurred: ${e.message}", e
+       // handle error
+   }
+   ```
+
+### Accessibility Requirements (WCAG 2.1 AA)
+
+**CRITICAL**: All code must maintain accessibility standards:
+
+1. **HTML Semantics**:
+   ```gsp
+   <nav role="navigation" aria-label="Main navigation">
+   <main role="main">
+   <section aria-labelledby="section-heading">
+   ```
+
+2. **Form Accessibility**:
+   ```gsp
+   <label for="organizationName">Organization Name</label>
+   <input type="text" id="organizationName" name="organizationName" 
+          aria-describedby="orgNameHelp" required>
+   <div id="orgNameHelp" class="help-text">Enter the full organization name</div>
+   ```
+
+3. **Keyboard Navigation**:
+   - All interactive elements must be keyboard accessible
+   - Use proper tab order
+   - Implement focus management
+
+4. **ARIA Labels**:
+   ```gsp
+   <button aria-label="Search resources" type="submit">
+   <div role="alert" aria-live="polite">Search results updated</div>
+   ```
+
+### Database & GORM Patterns
+
+1. **Domain Relationships**:
+   ```groovy
+   class Resource {
+       static hasMany = [categories: Category, contacts: Contact]
+       static belongsTo = [Category]
+   }
+   ```
+
+2. **Query Optimization**:
+   ```groovy
+   // Use criteria for complex queries
+   def resources = Resource.createCriteria().list {
+       if (params.category) {
+           categories {
+               eq('name', params.category)
+           }
+       }
+       if (params.search) {
+           or {
+               ilike('organizationName', "%${params.search}%")
+               ilike('description', "%${params.search}%")
+           }
+       }
+   }
+   ```
+
+3. **Validation Patterns**:
+   ```groovy
+   static constraints = {
+       organizationName blank: false, maxSize: 255
+       description blank: false, maxSize: 1000
+       website url: true, nullable: true
+       email email: true, nullable: true
+   }
+   ```
+
+### Frontend & Asset Pipeline
+
+1. **GSP Template Standards**:
+   ```gsp
+   <!DOCTYPE html>
+   <html lang="${lang}">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title><g:layoutTitle default="River City Resources"/></title>
+       <asset:stylesheet src="application.css"/>
+   </head>
+   <body>
+       <g:layoutBody/>
+       <asset:javascript src="application.js"/>
+   </body>
+   </html>
+   ```
+
+2. **Asset Organization**:
+   - CSS: `grails-app/assets/stylesheets/`
+   - JavaScript: `grails-app/assets/javascripts/`
+   - Images: `grails-app/assets/images/`
+   - Use asset tags: `<asset:stylesheet>`, `<asset:javascript>`
+
+3. **Bootstrap Integration**:
+   ```gsp
+   <div class="container-fluid">
+       <div class="row">
+           <div class="col-md-8">
+               <!-- Content -->
+           </div>
+       </div>
+   </div>
+   ```
+
+### Testing Standards
+
+1. **Unit Tests (Spock)**:
+   ```groovy
+   class ResourceServiceSpec extends Specification {
+       ResourceService resourceService
+       
+       def "should save resource successfully"() {
+           given:
+           Resource resource = new Resource(organizationName: "Test Org")
+           
+           when:
+           Resource saved = resourceService.saveResource(resource)
+           
+           then:
+           saved.id != null
+           saved.organizationName == "Test Org"
+       }
+   }
+   ```
+
+2. **Integration Tests**:
+   ```groovy
+   class ResourceControllerSpec extends Specification {
+       def "should list resources"() {
+           when:
+           controller.index()
+           
+           then:
+           view == '/resource/index'
+           model.resources != null
+       }
+   }
+   ```
+
+### Security Implementation
+
+1. **Spring Security Integration**:
+   ```groovy
+   class SecurityFilters {
+       def filters = {
+           admin(controller: 'admin', action: '*') {
+               before = {
+                   if (!springSecurityService.isLoggedIn()) {
+                       redirect controller: 'login', action: 'auth'
+                       return false
+                   }
+               }
+           }
+       }
+   }
+   ```
+
+2. **Authentication Patterns**:
+   - Use `@Secured` annotations
+   - Implement role-based access control
+   - Secure admin interfaces
+
+### Performance Considerations
+
+1. **Database Optimization**:
+   - Use pagination for large result sets
+   - Implement proper indexing
+   - Consider eager vs lazy loading
+   - Enable Hibernate second-level cache
+
+2. **Asset Optimization**:
+   - Minify CSS/JS in production
+   - Use asset pipeline for optimization
+   - Implement proper caching headers
+
+### Common Commands & Development
+
+1. **Grails Commands**:
+   ```bash
+   ./grailsw create-domain-class Resource
+   ./grailsw create-controller ResourceController
+   ./grailsw create-service ResourceService
+   ./grailsw generate-all Resource
+   ```
+
+2. **Gradle Commands**:
+   ```bash
+   ./gradlew bootRun          # Start application
+   ./gradlew test             # Run tests
+   ./gradlew build            # Build application
+   ./gradlew clean            # Clean build artifacts
+   ```
+
+### Project-Specific Guidelines
+
+1. **Resource Directory Structure**:
+   - Transportation
+   - Employment
+   - Education/Training
+   - Financial Support
+   - Support/Community
+   - Healthcare (future)
+   - Housing (future)
+   - Legal Services (future)
+
+2. **Search Implementation**:
+   - Use GORM criteria queries
+   - Implement full-text search
+   - Add database indexes for performance
+   - Consider search result ranking
+
+3. **Admin Interface**:
+   - Use Grails scaffolding for rapid development
+   - Customize generated views for better UX
+   - Implement proper form validation
+   - Add bulk operations where appropriate
+
+### Code Quality Standards
+
+1. **Always Include**:
+   - Proper error handling
+   - Input validation
+   - Accessibility attributes
+   - Logging for debugging
+   - Transaction management in services
+
+2. **Avoid**:
+   - N+1 query problems
+   - Hardcoded values (use configuration)
+   - Missing accessibility features
+   - Insecure direct object references
+   - SQL injection vulnerabilities
+
+3. **Documentation**:
+   - Comment complex business logic
+   - Document API endpoints
+   - Maintain README updates
+   - Include inline documentation for accessibility features
+
+## Development Workflow
+
+1. **Before Coding**:
+   - Review existing similar implementations
+   - Check accessibility requirements
+   - Plan database relationships
+   - Consider security implications
+
+2. **During Development**:
+   - Follow Grails conventions
+   - Implement proper validation
+   - Add comprehensive tests
+   - Ensure accessibility compliance
+
+3. **Before Committing**:
+   - Run all tests
+   - Check for accessibility issues
+   - Verify security measures
+   - Update documentation if needed
+
+## Key Files to Reference
+
+- `CLAUDE.md` - Comprehensive project documentation
+- `build.gradle` - Dependencies and build configuration
+- `application.yml` - Application configuration
+- Domain classes in `grails-app/domain/` - Data model
+- Controllers in `grails-app/controllers/` - Request handling
+- Services in `grails-app/services/` - Business logic
+
+Remember: This is a disability resources application requiring WCAG 2.1 AA compliance. Every feature must be accessible to users with disabilities.

@@ -26,13 +26,103 @@
                         <div class="alert alert-success" role="status" aria-live="polite">${flash.message}</div>
                     </g:if>
                     
+                    <!-- Provider Context Information -->
+                    <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }}">
+                        <div class="alert alert-info" role="status" aria-live="polite">
+                            <h2 class="alert-heading h5">Provider Dashboard</h2>
+                            <p class="mb-0">As a service provider, you can view all resources and edit only the ones you have submitted. Your submitted resources require admin approval before they appear in the public directory.</p>
+                        </div>
+                    </g:if>
+                    
                     <div class="table-responsive">
                         <table class="table table-striped table-hover" role="table" aria-label="List of resources">
                             <caption class="sr-only">
                                 Table showing ${resourceList?.size() ?: 0} resources. 
                                 Use arrow keys to navigate table cells and tab to access action buttons.
                             </caption>
-                            <f:table collection="${resourceList}" />
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Submitted By</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <g:each in="${resourceList}" var="resource" status="i">
+                                    <tr>
+                                        <td>
+                                            <g:link action="show" id="${resource.id}" aria-label="View details for ${resource.name}">
+                                                ${resource.name}
+                                            </g:link>
+                                            <g:if test="${resource.featured}">
+                                                <span class="badge badge-warning ml-2" aria-label="Featured resource">Featured</span>
+                                            </g:if>
+                                        </td>
+                                        <td>${resource.category?.name}</td>
+                                        <td>
+                                            <g:if test="${resource.approvalStatus == 'approved'}">
+                                                <span class="badge badge-success" aria-label="Approved resource">Approved</span>
+                                            </g:if>
+                                            <g:elseif test="${resource.approvalStatus == 'pending'}">
+                                                <span class="badge badge-warning" aria-label="Pending approval">Pending</span>
+                                            </g:elseif>
+                                            <g:elseif test="${resource.approvalStatus == 'rejected'}">
+                                                <span class="badge badge-danger" aria-label="Rejected resource">Rejected</span>
+                                            </g:elseif>
+                                        </td>
+                                        <td>
+                                            <g:if test="${resource.submittedBy}">
+                                                ${resource.submittedBy.firstName} ${resource.submittedBy.lastName}
+                                            </g:if>
+                                            <g:else>
+                                                <span class="text-muted">System</span>
+                                            </g:else>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Actions for ${resource.name}">
+                                                <g:link class="btn btn-sm btn-outline-primary" action="show" id="${resource.id}" 
+                                                        aria-label="View details for ${resource.name}">
+                                                    <i class="fas fa-eye" aria-hidden="true"></i> View
+                                                </g:link>
+                                                
+                                                <!-- Edit button - only for admins or resource submitter -->
+                                                <g:if test="${!springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' } || resource.submittedBy?.id == springSecurityService.currentUser?.id}">
+                                                    <g:link class="btn btn-sm btn-outline-secondary" action="edit" id="${resource.id}"
+                                                            aria-label="Edit ${resource.name}">
+                                                        <i class="fas fa-edit" aria-hidden="true"></i> Edit
+                                                    </g:link>
+                                                </g:if>
+                                                
+                                                <!-- Admin approval actions -->
+                                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' } && resource.approvalStatus == 'pending'}">
+                                                    <g:link class="btn btn-sm btn-success" action="approve" id="${resource.id}"
+                                                            onclick="return confirm('Approve this resource?')"
+                                                            aria-label="Approve ${resource.name}">
+                                                        <i class="fas fa-check" aria-hidden="true"></i> Approve
+                                                    </g:link>
+                                                    <g:link class="btn btn-sm btn-danger" action="reject" id="${resource.id}"
+                                                            aria-label="Reject ${resource.name}">
+                                                        <i class="fas fa-times" aria-hidden="true"></i> Reject
+                                                    </g:link>
+                                                </g:if>
+                                                
+                                                <!-- Delete button - only for admins -->
+                                                <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
+                                                    <g:form resource="${resource}" method="DELETE" style="display: inline;"
+                                                            onsubmit="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                                aria-label="Delete ${resource.name}">
+                                                            <i class="fas fa-trash" aria-hidden="true"></i> Delete
+                                                        </button>
+                                                    </g:form>
+                                                </g:if>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </g:each>
+                            </tbody>
                         </table>
                     </div>
 

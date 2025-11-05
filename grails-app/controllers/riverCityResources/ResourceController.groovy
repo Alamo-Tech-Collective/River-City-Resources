@@ -2,18 +2,30 @@ package riverCityResources
 
 import grails.validation.ValidationException
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugin.springsecurity.SpringSecurityService
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_ADMIN'])
+@Secured(['ROLE_ADMIN', 'ROLE_PROVIDER'])
 class ResourceController {
 
     ResourceService resourceService
+    SpringSecurityService springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond resourceService.list(params), model:[resourceCount: resourceService.count()]
+        def currentUser = springSecurityService.currentUser as User
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
+        
+        if (isProvider) {
+            // Providers can only see their own approved resources
+            respond resourceService.listForProvider(currentUser, params), 
+                   model:[resourceCount: resourceService.countForProvider(currentUser)]
+        } else {
+            // Admins can see all resources
+            respond resourceService.list(params), model:[resourceCount: resourceService.count()]
+        }
     }
 
     def show(Long id) {
@@ -31,6 +43,9 @@ class ResourceController {
             notFound()
             return
         }
+        
+        def currentUser = springSecurityService.currentUser as User
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
         
         // Handle contact information
         if (params.contact) {
@@ -51,6 +66,16 @@ class ResourceController {
                 )
             }
         }
+        
+        // Set approval status based on user role
+        if (isProvider) {
+            resource.submittedBy = currentUser
+            resource.approvalStatus = 'pending'
+        } else {
+            resource.approvalStatus = 'approved'
+            resource.approvedBy = currentUser
+            resource.approvedDate = new Date()
+        }
 
         try {
             resourceService.save(resource)
@@ -61,7 +86,11 @@ class ResourceController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'resource.label', default: 'Resource'), resource.id])
+                if (isProvider) {
+                    flash.message = "Resource submitted for approval. You will be notified once it's reviewed."
+                } else {
+                    flash.message = message(code: 'default.created.message', args: [message(code: 'resource.label', default: 'Resource'), resource.id])
+                }
                 redirect resource
             }
             '*' { respond resource, [status: CREATED] }
@@ -74,12 +103,33 @@ class ResourceController {
             notFound()
             return
         }
+        
+        def currentUser = springSecurityService.currentUser as User
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
+        
+        // Check if provider can edit this resource
+        if (isProvider && resource.submittedBy != currentUser) {
+            flash.message = "You can only edit resources you have submitted."
+            redirect action: 'index'
+            return
+        }
+        
         respond resource, model: [categories: Category.findAllByActive(true, [sort: 'displayOrder'])]
     }
 
     def update(Resource resource) {
         if (resource == null) {
             notFound()
+            return
+        }
+        
+        def currentUser = springSecurityService.currentUser as User
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
+        
+        // Check if provider can edit this resource
+        if (isProvider && resource.submittedBy != currentUser) {
+            flash.message = "You can only edit resources you have submitted."
+            redirect action: 'index'
             return
         }
         
@@ -104,6 +154,14 @@ class ResourceController {
                 )
             }
         }
+        
+        // Handle approval status for provider updates
+        if (isProvider && resource.approvalStatus == 'approved') {
+            // If provider edits an approved resource, it goes back to pending
+            resource.approvalStatus = 'pending'
+            resource.approvedBy = null
+            resource.approvedDate = null
+        }
 
         try {
             resourceService.save(resource)
@@ -114,7 +172,11 @@ class ResourceController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'resource.label', default: 'Resource'), resource.id])
+                if (isProvider && resource.approvalStatus == 'pending') {
+                    flash.message = "Resource updated and submitted for re-approval."
+                } else {
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'resource.label', default: 'Resource'), resource.id])
+                }
                 redirect resource
             }
             '*'{ respond resource, [status: OK] }
@@ -131,6 +193,16 @@ class ResourceController {
             notFound()
             return
         }
+        
+        def currentUser = springSecurityService.currentUser as User
+        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
+        
+        // Only admins can delete resources
+        if (isProvider) {
+            flash.message = "You do not have permission to delete resources."
+            redirect action: 'index'
+            return
+        }
 
         resourceService.delete(id)
 
@@ -140,6 +212,52 @@ class ResourceController {
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    @Secured(['ROLE_ADMIN'])
+    def approve(Long id) {
+        def resource = resourceService.get(id)
+        if (!resource) {
+            notFound()
+            return
+        }
+        
+        def currentUser = springSecurityService.currentUser as User
+        resource.approvalStatus = 'approved'
+        resource.approvedBy = currentUser
+        resource.approvedDate = new Date()
+        resource.rejectionReason = null
+        
+        resourceService.save(resource)
+        
+        flash.message = "Resource approved successfully."
+        redirect action: 'index'
+    }
+    
+    @Secured(['ROLE_ADMIN'])
+    def reject(Long id) {
+        def resource = resourceService.get(id)
+        if (!resource) {
+            notFound()
+            return
+        }
+        
+        if (request.method == 'POST') {
+            // Process rejection
+            def currentUser = springSecurityService.currentUser as User
+            resource.approvalStatus = 'rejected'
+            resource.approvedBy = currentUser
+            resource.approvedDate = new Date()
+            resource.rejectionReason = params.rejectionReason
+            
+            resourceService.save(resource)
+            
+            flash.message = "Resource rejected successfully."
+            redirect action: 'index'
+        } else {
+            // Show rejection form
+            respond resource, model: [resource: resource]
         }
     }
 

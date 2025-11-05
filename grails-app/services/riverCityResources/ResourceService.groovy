@@ -80,4 +80,69 @@ class ResourceService {
             }
         }
     }
+
+    /**
+     * List resources for a provider - shows only their approved resources
+     * @param user The provider user
+     * @param args Map of arguments for pagination and sorting
+     * @return List of approved resources submitted by the provider
+     */
+    List<Resource> listForProvider(User user, Map args) {
+        return Resource.createCriteria().list(args) {
+            eq('submittedBy', user)
+            eq('approvalStatus', 'approved')
+            order('name')
+        }
+    }
+
+    /**
+     * Count approved resources for a provider
+     * @param user The provider user
+     * @return Count of approved resources submitted by the provider
+     */
+    Long countForProvider(User user) {
+        return Resource.countBySubmittedByAndApprovalStatus(user, 'approved')
+    }
+
+    /**
+     * Get resources submitted by a specific provider
+     * @param user The provider user
+     * @param args Map of arguments for pagination and sorting
+     * @return List of resources submitted by the provider
+     */
+    List<Resource> listByProvider(User user, Map args) {
+        return Resource.createCriteria().list(args) {
+            eq('submittedBy', user)
+            order('name')
+        }
+    }
+
+    /**
+     * Count resources submitted by a specific provider
+     * @param user The provider user
+     * @return Count of resources submitted by the provider
+     */
+    Long countByProvider(User user) {
+        return Resource.countBySubmittedBy(user)
+    }
+
+    /**
+     * Get pending resources for admin approval
+     * @param args Map of arguments for pagination and sorting
+     * @return List of pending resources
+     */
+    List<Resource> listPending(Map args) {
+        return Resource.createCriteria().list(args) {
+            eq('approvalStatus', 'pending')
+            order('dateCreated', 'desc')
+        }
+    }
+
+    /**
+     * Count pending resources
+     * @return Count of pending resources
+     */
+    Long countPending() {
+        return Resource.countByApprovalStatus('pending')
+    }
 }

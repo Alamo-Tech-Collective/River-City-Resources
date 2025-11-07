@@ -30,7 +30,7 @@
                     <g:if test="${isProvider}">
                         <div class="alert alert-info" role="status" aria-live="polite">
                             <h2 class="alert-heading h5">Provider Dashboard</h2>
-                            <p class="mb-0">As a service provider, you can view all resources and edit only the ones you have submitted. Your submitted resources require admin approval before they appear in the public directory.</p>
+                            <p class="mb-0">As a service provider, you can view and edit only the resources you have submitted that have been approved. Your submitted resources require admin approval before they appear in the public directory.</p>
                         </div>
                     </g:if>
                     

@@ -74,6 +74,9 @@ dependencies {
     runtimeOnly "mysql:mysql-connector-java:8.0.33"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc"
     runtimeOnly "org.fusesource.jansi:jansi:1.18"
+    
+    // Spring Boot DevTools for hot reloading in development
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.grails:grails-web-testing-support"
@@ -108,4 +111,13 @@ assets {
     minifyJs = true
     minifyCss = true
     skipNonDigests = true
+}
+
+// Configure bootRun for development with hot reloading
+bootRun {
+    sourceResources sourceSets.main
+    jvmArgs = [
+        '-XX:+UseG1GC',
+        '-Dspring.profiles.active=development'
+    ]
 }

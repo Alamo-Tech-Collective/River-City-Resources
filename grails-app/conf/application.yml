@@ -64,6 +64,19 @@ dataSource:
   password: ''
   pooled: true
   jmxExport: true
+spring:
+  devtools:
+    restart:
+      enabled: true
+      exclude: 
+        - "static/**"
+        - "public/**"
+        - "templates/**"
+        - "META-INF/maven/**"
+        - "META-INF/resources/**"
+    livereload:
+      enabled: true
+      port: 35729
 environments:
   development:
     dataSource:

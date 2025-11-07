@@ -20,11 +20,26 @@ class ResourceController {
         
         if (isProvider) {
             // Providers can only see their own approved resources
-            respond resourceService.listForProvider(currentUser, params), 
-                   model:[resourceCount: resourceService.countForProvider(currentUser)]
+            def resourceList = resourceService.listForProvider(currentUser, params)
+            def resourceCount = resourceService.countForProvider(currentUser)
+            def isEmpty = (resourceList == null || resourceList.empty)
+            respond resourceList, 
+                   model:[
+                       resourceCount: resourceCount, 
+                       isEmpty: isEmpty,
+                       isProvider: true,
+                       currentUser: currentUser
+                   ]
         } else {
             // Admins can see all resources
-            respond resourceService.list(params), model:[resourceCount: resourceService.count()]
+            def resourceList = resourceService.list(params)
+            def resourceCount = resourceService.count()
+            respond resourceList, model:[
+                resourceCount: resourceCount,
+                isProvider: false,
+                isEmpty: false,
+                currentUser: currentUser
+            ]
         }
     }
 

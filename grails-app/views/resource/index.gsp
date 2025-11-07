@@ -27,7 +27,7 @@
                     </g:if>
                     
                     <!-- Provider Context Information -->
-                    <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }}">
+                    <g:if test="${isProvider}">
                         <div class="alert alert-info" role="status" aria-live="polite">
                             <h2 class="alert-heading h5">Provider Dashboard</h2>
                             <p class="mb-0">As a service provider, you can view all resources and edit only the ones you have submitted. Your submitted resources require admin approval before they appear in the public directory.</p>
@@ -50,6 +50,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Provider Empty Resources Message -->
+                                <g:if test="${isProvider && (isEmpty || resourceCount == 0)}">
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="alert alert-info m-3" role="status" aria-live="polite">
+                                                <p class="mb-0">
+                                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                                    You do not have any approved resources. Please submit a new resource or come back later after an admin has had a chance to review your submission(s).
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </g:if>
                                 <g:each in="${resourceList}" var="resource" status="i">
                                     <tr>
                                         <td>

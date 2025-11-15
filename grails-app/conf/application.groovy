@@ -34,6 +34,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     [pattern: '/user/**',        access: ['ROLE_ADMIN']],
     [pattern: '/role/**',        access: ['ROLE_ADMIN']],
     
+    // Provider access
+    [pattern: '/provider/**',    access: ['ROLE_PROVIDER']],
+    
     // Login/Logout
     [pattern: '/login/**',       access: ['permitAll']],
     [pattern: '/logout/**',      access: ['permitAll']]
@@ -41,8 +44,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 // Additional security settings
 grails.plugin.springsecurity.logout.postOnly = false
-grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/admin'
+grails.plugin.springsecurity.successHandler.ref = 'authenticationSuccessHandler'
 grails.plugin.springsecurity.failureHandler.defaultFailureUrl = '/login/authfail?login_error=1'
 
 // Password encoding

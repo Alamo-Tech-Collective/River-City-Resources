@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Admin Login - River City Resources</title>
+    <title>Login - River City Resources</title>
     <meta name="description" content="Login to manage disability resources in the River City Resources directory. Admin access only."/>
     <meta name="robots" content="noindex, nofollow"/>
     <style>
@@ -68,7 +68,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h1>Admin Login</h1>
+        <h1>Login</h1>
         
         <g:if test='${flash.message}'>
             <div class="info-message" role="status" aria-live="polite">${flash.message}</div>
@@ -79,7 +79,7 @@
         </g:if>
         
         <form action="${postUrl ?: '/login/authenticate'}" method="POST" class="login-form" 
-              role="form" aria-label="Admin login form" novalidate>
+              role="form" aria-label="Login form" novalidate>
             <fieldset>
                 <legend class="sr-only">Login Credentials</legend>
                 

@@ -21,6 +21,9 @@ class UrlMappings {
         "/admin/resources"(controller:"resource", action:"index")
         "/admin/categories"(controller:"category", action:"index")
         
+        // Provider routes - redirect to resource page
+        "/provider"(controller:"resource", action:"index")
+        
         // Login/Logout routes (handled by Spring Security)
         "/login"(controller:"login", action:"auth")
         "/login/authfail"(controller:"login", action:"authfail")

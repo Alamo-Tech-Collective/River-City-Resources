@@ -17,6 +17,33 @@ Find disability resources in San Antonio, TX. Browse our comprehensive directory
 
 Refer to [Docker README.md](/docker/README.md)
 
+## Hot Reloading (Development)
+
+The project is configured with Spring Boot DevTools for hot reloading during development. This means you don't need to restart the application when making changes to:
+
+- **GSP views** (`grails-app/views/`) - Changes appear immediately
+- **Controllers** (`grails-app/controllers/`) - Auto-restart on save
+- **Services** (`grails-app/services/`) - Auto-restart on save
+- **Domain classes** (`grails-app/domain/`) - Auto-restart on save
+- **Configuration** (`grails-app/conf/`) - Auto-restart on save
+
+### How it works
+
+1. Start the application with `./gradlew bootRun`
+2. Make changes to any of the files above
+3. Save the file - the application will automatically restart (you'll see a message in the console)
+4. Refresh your browser to see the changes
+
+**Note:** The first restart after starting the app may take a few seconds. Subsequent restarts are typically faster.
+
+### Browser LiveReload (Optional)
+
+If you want automatic browser refresh when files change, you can install a LiveReload browser extension:
+- Chrome: [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+- Firefox: [LiveReload](https://addons.mozilla.org/en-US/firefox/addon/livereload-web-extension/)
+
+The LiveReload server runs on port `35729` by default.
+
 ## Troubleshooting GitHub
 
 To troubleshoot GitHub related issues you can read the [TROUBLESHOOTING.md](TROUBLESHOOTING.md)

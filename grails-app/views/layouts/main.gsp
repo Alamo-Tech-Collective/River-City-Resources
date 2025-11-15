@@ -116,26 +116,46 @@
                 </li>
                 
                 <sec:ifLoggedIn>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Admin menu">
-                            <g:message code="nav.admin"/>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown" role="menu">
-                            <g:link controller="admin" action="index" class="dropdown-item" role="menuitem">
-                                <g:message code="admin.dashboard"/>
-                            </g:link>
-                            <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">
-                                <g:message code="admin.manage.resources"/>
-                            </g:link>
-                            <g:link controller="category" action="index" class="dropdown-item" role="menuitem">
-                                <g:message code="admin.manage.categories"/>
-                            </g:link>
-                            <div class="dropdown-divider" role="separator"></div>
-                            <g:link controller="logout" class="dropdown-item" role="menuitem">
-                                <g:message code="nav.logout"/>
-                            </g:link>
-                        </div>
-                    </li>
+                    <!-- Admin menu - only show for admins -->
+                    <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Admin menu">
+                                <g:message code="nav.admin"/>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown" role="menu">
+                                <g:link controller="admin" action="index" class="dropdown-item" role="menuitem">
+                                    <g:message code="admin.dashboard"/>
+                                </g:link>
+                                <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">
+                                    <g:message code="admin.manage.resources"/>
+                                </g:link>
+                                <g:link controller="category" action="index" class="dropdown-item" role="menuitem">
+                                    <g:message code="admin.manage.categories"/>
+                                </g:link>
+                                <div class="dropdown-divider" role="separator"></div>
+                                <g:link controller="logout" class="dropdown-item" role="menuitem">
+                                    <g:message code="nav.logout"/>
+                                </g:link>
+                            </div>
+                        </li>
+                    </g:if>
+                    <!-- Provider menu - only show for providers (not admins) -->
+                    <g:if test="${springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' } && !springSecurityService?.currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="providerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Provider menu">
+                                <g:message code="nav.provider" default="Provider"/>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="providerDropdown" role="menu">
+                                <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">
+                                    <g:message code="provider.manage.resources" default="My Resources"/>
+                                </g:link>
+                                <div class="dropdown-divider" role="separator"></div>
+                                <g:link controller="logout" class="dropdown-item" role="menuitem">
+                                    <g:message code="nav.logout"/>
+                                </g:link>
+                            </div>
+                        </li>
+                    </g:if>
                 </sec:ifLoggedIn>
                 <sec:ifNotLoggedIn>
                     <li class="nav-item">

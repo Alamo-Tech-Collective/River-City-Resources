@@ -1,5 +1,5 @@
 # Multi-stage build for Grails application
-FROM gradle:7.6.4-jdk17-jammy AS builder
+FROM gradle:7.6.4-jdk17-alpine AS builder
 
 # Set working directory
 WORKDIR /build
@@ -22,7 +22,7 @@ COPY src /build/src
 RUN ./gradlew bootJar --no-daemon --parallel
 
 # Runtime stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 # Install required packages
 RUN apt-get update && \
@@ -31,7 +31,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Create app user
-RUN useradd -m -u 1000 grails
+RUN useradd -m grails
 
 # Set working directory
 WORKDIR /app

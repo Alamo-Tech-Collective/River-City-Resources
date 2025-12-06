@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Admin Login - River City Resources</title>
-    <meta name="description" content="Login to manage disability resources in the River City Resources directory. Admin access only."/>
+    <title>Login - River City Resources</title>
+    <meta name="description" content="Login to manage disability resources in the River City Resources directory. Provider or Admin access only."/>
     <meta name="robots" content="noindex, nofollow"/>
     <style>
         .login-container {
@@ -68,7 +68,7 @@
 </head>
 <body>
     <div class="login-container">
-        <h1>Admin Login</h1>
+        <h1>Login</h1>
         
         <g:if test='${flash.message}'>
             <div class="info-message" role="status" aria-live="polite">${flash.message}</div>
@@ -79,7 +79,7 @@
         </g:if>
         
         <form action="${postUrl ?: '/login/authenticate'}" method="POST" class="login-form" 
-              role="form" aria-label="Admin login form" novalidate>
+              role="form" aria-label="login form" novalidate>
             <fieldset>
                 <legend class="sr-only">Login Credentials</legend>
                 
@@ -89,7 +89,7 @@
                            id="username" required autofocus autocomplete="username"
                            aria-describedby="username-help"
                            aria-invalid="${params.login_error == '1' ? 'true' : 'false'}"/>
-                    <div id="username-help" class="form-text">Enter your admin username</div>
+                    <div id="username-help" class="form-text">Enter your username</div>
                 </div>
                 
                 <div class="form-group">
@@ -98,7 +98,7 @@
                            id="password" required autocomplete="current-password"
                            aria-describedby="password-help"
                            aria-invalid="${params.login_error == '1' ? 'true' : 'false'}"/>
-                    <div id="password-help" class="form-text">Enter your admin password</div>
+                    <div id="password-help" class="form-text">Enter your password</div>
                 </div>
                 
                 <div class="form-group checkbox-group">
@@ -111,7 +111,7 @@
                 <button type="submit" class="btn-login" aria-describedby="login-help">
                     Login
                 </button>
-                <div id="login-help" class="sr-only">Submit the form to log in to the admin area</div>
+                <div id="login-help" class="sr-only">Submit the form to log in to the provider or admin area</div>
             </fieldset>
         </form>
         

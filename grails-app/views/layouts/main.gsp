@@ -114,8 +114,7 @@
                         </g:link>
                     </div>
                 </li>
-                
-                <sec:ifLoggedIn>
+                <sec:ifAllGranted roles="ROLE_ADMIN">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Admin menu">
                             <g:message code="nav.admin"/>
@@ -136,11 +135,27 @@
                             </g:link>
                         </div>
                     </li>
-                </sec:ifLoggedIn>
+                </sec:ifAllGranted>
+                <sec:ifAllGranted roles="ROLE_PROVIDER">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="providerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Provider menu">
+                            <g:message code="nav.provider"/>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="providerDropdown" role="menu">
+                            <g:link controller="resource" action="index" class="dropdown-item" role="menuitem">
+                                <g:message code="provider.my.resources"/>
+                            </g:link>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <g:link controller="logout" class="dropdown-item" role="menuitem">
+                                <g:message code="nav.logout"/>
+                            </g:link>
+                        </div>
+                    </li>
+                </sec:ifAllGranted>
                 <sec:ifNotLoggedIn>
                     <li class="nav-item">
                         <g:link controller="login" action="auth" class="nav-link" aria-current="${controllerName == 'login' ? 'page' : ''}">
-                            <g:message code="nav.admin.login"/>
+                            <g:message code="nav.login"/>
                         </g:link>
                     </li>
                 </sec:ifNotLoggedIn>

@@ -109,3 +109,7 @@ assets {
     minifyCss = true
     skipNonDigests = true
 }
+
+startScripts {
+    dependsOn bootJar
+}

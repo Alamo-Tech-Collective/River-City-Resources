@@ -43,6 +43,7 @@ If you've contributed and don't see your name, or if you'd like to update your i
 
 * **[Brandon](https://github.com/TheRetroRoot)** - Initial project setup, project deployment, SEO, accessibility, and resources research.
 * **[Paul Thompson](https://github.com/portalman32)** - Initial project idea and initial logo design.
+* **[Graham](https://github.com/gness1804)**
 
 ## Grails 6.2.3 Documentation
 - [User Guide](https://docs.grails.org/6.2.3/guide/index.html)

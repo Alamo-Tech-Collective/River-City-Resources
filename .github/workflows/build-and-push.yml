@@ -13,6 +13,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.repository == 'Alamo-Tech-Collective/River-City-Resources'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -62,7 +63,7 @@ jobs:
 
   build-image:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'Alamo-Tech-Collective/River-City-Resources'
     runs-on: ubuntu-latest
     permissions:
       contents: read

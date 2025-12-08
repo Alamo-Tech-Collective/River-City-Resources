@@ -15,7 +15,20 @@ Find disability resources in San Antonio, TX. Browse our comprehensive directory
 
 ## Start project
 
-Refer to [Docker README.md](/docker/README.md)
+1. Navigate to the project directory:
+```bash
+   cd River-City-Resources
+```
+
+2. Run the Grails application:
+```bash
+   ./gradlew bootRun
+```
+
+3. Open your browser and navigate to `http://localhost:8080`
+
+The application should now be running locally. You should see the application's home page.
+
 
 ## Troubleshooting GitHub
 

@@ -1,9 +1,7 @@
-package com.rivercity
+package riverCityResources
 
 import grails.gorm.transactions.Transactional
 import grails.gorm.DetachedCriteria
-import riverCityResources.Resource
-import riverCityResources.Category
 
 @Transactional(readOnly = true)
 class ResourceSearchService {

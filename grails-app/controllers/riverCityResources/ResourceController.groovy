@@ -16,9 +16,8 @@ class ResourceController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def currentUser = springSecurityService.currentUser as User
-        def isProvider = currentUser?.authorities?.any { it.authority == 'ROLE_PROVIDER' }
-        
-        if (isProvider) {
+
+        if (!isAdmin()) {
             // Providers can only see their own approved resources
             respond resourceService.listForProvider(currentUser, params), 
                    model:[resourceCount: resourceService.countForProvider(currentUser)]
@@ -29,7 +28,13 @@ class ResourceController {
     }
 
     def show(Long id) {
-        respond resourceService.get(id)
+        if (isAdmin()){
+            respond resourceService.get(id)
+            return
+        } else {
+            def currentUser = springSecurityService.currentUser as User
+            respond resourceService.getByUserAndId(currentUser, id)
+        }
     }
 
     def create() {
@@ -269,5 +274,10 @@ class ResourceController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    private Boolean isAdmin(){
+        def currentUser = springSecurityService.currentUser as User
+        currentUser?.authorities?.any { it.authority == 'ROLE_ADMIN' }
     }
 }

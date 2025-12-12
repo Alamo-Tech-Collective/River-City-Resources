@@ -81,6 +81,10 @@ class ResourceService {
         }
     }
 
+    Resource getByUserAndId(User user, Long id){
+        Resource.findBySubmittedByAndId(user, id)
+    }
+
     /**
      * List resources for a provider - shows only their approved resources
      * @param user The provider user

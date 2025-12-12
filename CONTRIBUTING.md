@@ -33,6 +33,16 @@ git checkout -b my-feature main
 ```
 Make your changes and commits to this local feature branch.
 
+## Before Creating a Pull Request
+
+Please ensure the following commands run successfully:
+
+Run tests `./gradlew test`
+
+Build with gradle `./gradlew clean assemble`
+
+## Creating a Pull Request
+
 Perform the following commands on your local feature branch once you're done your work, to ensure you have no conflicts with other work done since you started.
 ```
 git pull

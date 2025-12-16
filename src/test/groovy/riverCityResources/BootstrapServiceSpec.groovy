@@ -13,7 +13,7 @@ class BootstrapServiceSpec extends Specification implements ServiceUnitTest<Boot
 
     void "test service method exists"() {
         expect:"service method should exist and be callable"
-            service.respondsTo('serviceMethod')
+            service.respondsTo('createInitialSecurityRoles')
     }
     
     void "test service is properly initialized"() {

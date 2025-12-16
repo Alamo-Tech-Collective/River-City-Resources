@@ -159,15 +159,15 @@ class CategoryControllerSpec extends Specification implements ControllerUnitTest
         controller.categoryService = Mock(CategoryService) {
             1 * save(_ as Category)
         }
+        // Populate params BEFORE setting method to PUT to avoid stream closed error
+        populateValidParams(params)
+        def category = new Category(params)
+        category.id = 1
 
         when:"The save action is executed with a valid instance"
         response.reset()
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        populateValidParams(params)
-        def category = new Category(params)
-        category.id = 1
-
         controller.update(category)
 
         then:"A redirect is issued to the show action"
@@ -182,11 +182,12 @@ class CategoryControllerSpec extends Specification implements ControllerUnitTest
                 throw new ValidationException("Invalid instance", category.errors)
             }
         }
+        def category = new Category()
 
         when:"The save action is executed with an invalid instance"
-        request.contentType = FORM_CONTENT_TYPE
+        request.contentType = JSON_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Category())
+        controller.update(category)
 
         then:"The edit view is rendered again with the correct model"
         model.category != null

@@ -21,6 +21,8 @@ tmp/
 
 # Docker volumes
 mysql_data/
+database/data/**
+database/docker-entrypoint-initdb.d/**
 
 # Logs
 logs/

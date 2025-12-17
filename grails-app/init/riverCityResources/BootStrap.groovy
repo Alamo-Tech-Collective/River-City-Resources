@@ -6,12 +6,12 @@ class BootStrap {
     def init = { servletContext ->
         environments {
             development {
-                bootstrapService.createInitialSecurityRoles()
-                bootstrapService.createInitialAdminUser()
-                bootstrapService.createProviderUsers()
-                bootstrapService.createInitialCategories()
-                bootstrapService.createComprehensiveTestData()
-                bootstrapService.createProviderTestResources()
+//                bootstrapService.createInitialSecurityRoles()
+//                bootstrapService.createInitialAdminUser()
+//                bootstrapService.createProviderUsers()
+//                bootstrapService.createInitialCategories()
+//                bootstrapService.createComprehensiveTestData()
+//                bootstrapService.createProviderTestResources()
             }
         }
     }

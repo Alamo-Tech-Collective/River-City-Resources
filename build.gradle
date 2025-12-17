@@ -6,6 +6,7 @@ buildscript {
     dependencies { // Not Published to Gradle Plugin Portal
         classpath "org.grails:grails-gradle-plugin:6.2.4"
         classpath "org.grails.plugins:hibernate5:8.1.0"
+        classpath 'org.grails.plugins:database-migration:5.0.0'
     }
 }
 
@@ -28,6 +29,14 @@ tasks.named("jar") {
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
 
+sourceSets {
+    main {
+        resources {
+            srcDir 'grails-app/migrations'
+        }
+    }
+}
+
 group = "riverCityResources"
 
 repositories {
@@ -35,18 +44,12 @@ repositories {
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
-// Removed selenium configuration - not using browser tests
-// configurations {
-//     all {
-//         resolutionStrategy.eachDependency { DependencyResolveDetails details->
-//             if (details.requested.group == 'org.seleniumhq.selenium') {
-//                 details.useVersion('4.19.1')
-//             }
-//         }
-//     }
-// }
 
 dependencies {
+    //Database Migrations
+    implementation 'org.grails.plugins:database-migration:5.0.0'
+    implementation 'org.liquibase:liquibase-core:4.19.0'
+
     profile "org.grails.profiles:web"
     implementation "org.grails:grails-core"
     implementation "org.grails:grails-logging"
